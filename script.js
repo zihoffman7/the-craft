@@ -5399,7 +5399,8 @@ var init = delag(function() {
     }
     else if (screen === "main menu") {
       if (button(width - 100, height - 40, width, height)) {
-        window.location.href = window.location.hostname + "/updates.txt";
+        window.open(window.location.hostname + "/updates.txt");
+        // window.location.href += "/updates.txt";
       }
     }
     else if (screen === "options menu") {
