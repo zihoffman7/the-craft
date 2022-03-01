@@ -1,19 +1,35 @@
 v1.0.1 - 3/1/22
 ----------------------
-Bug Fixes
+Bug fixes, balance changes
 ----------------------
-• Prevented dirt spawning instead of wood for autumn and pink trees
-• Prevented beehives from spawning in extraneous locations
-• Fixed odd ruin generation
-• Decreased probablilties for amount of pumpkins in pumpkin patch
-• Increased rarity of desert wells
++ Prevented dirt spawning instead of wood for autumn and pink trees
++ Prevented beehives from spawning in extraneous locations
++ Fixed odd ruin generation
++ Decreased probablilties for amount of pumpkins in pumpkin patch
++ Increased rarity of desert wells
++ Added update log to home page
++ Modified ore rarities
+  * Diamond
+    - Now ~2.6 per chunk instead of ~2.8
+  * Iron
+    - Now ~45 per chunk instead of ~50
+  * Coal
+    - Now ~55 per chunk instead of ~60
+  * Gold
+    - Now spawns below y28 instead of y32
+  * Redstone
+    - Now spawns below y24 instead of y32
+  * Lapis
+    - Now spawns below y26 instead of y32
++ Increased rarity of amethyst clusters
++ Prevented TNT and like blocks from exploding if broken before detonation
+
 
 v1.0.0 - 2/27/22
 ----------------------
 Alpha version
 ----------------------
-
-• Added 180 blocks
++ Added 180 blocks
 
   * Slime block
     - Bounciness
@@ -31,109 +47,139 @@ Alpha version
     - Spherical explosion
     - Knockback based on distance to explosion
     - Blocks not able to be exploded by TNT
-      • Bedrock
-      • Obsidian/Crying obsidian
-      • Ancient debris
-      • Volcanic rock
+      + Bedrock
+      + Obsidian/Crying obsidian
+      + Ancient debris
+      + Volcanic rock
 
   * Lodestone
     - Essentially a lucky block
-
----
-
-• Added 5 Biomes
++ Added 5 Biomes
 
   * Desert
     - Sandy surface
     - Natural features
-      • Cacti
+      + Cacti
     - Flowers
-      • Dead bush
+      + Dead bush
     - Caves
-      • Very few
+      + Very few
 
   * Plains
     - Grassy surface
     - Natural features
-      • No green trees
-      • Cherry and autumn trees spawn occasionally
-      • Pumpkin patches spawn occasionally, can also spawn a pumpkin solo
+      + No green trees
+      + Cherry and autumn trees spawn occasionally
+      + Pumpkin patches spawn occasionally, can also spawn a pumpkin solo
     - Flowers
-      • Poppy
-      • Cornflower
-      • Oxeye Daisy
-      • Grass
+      + Poppy
+      + Cornflower
+      + Oxeye Daisy
+      + Grass
     - Caves
-      • Very few
-      • Hanging roots are twice as common
+      + Very few
+      + Hanging roots are twice as common
 
   * Forest
     - Grassy surface
     - Natural features
-      • Frequent oak and birch trees
-      • Rare mushroom trees
-      • Beehives spawn on trees occasionally
+      + Frequent oak and birch trees
+      + Rare mushroom trees
+      + Beehives spawn on trees occasionally
     - Flowers
-      • Pink, white, and red tulips
-      • Oxeye daisy
-      • Poppy
-      • Dandelion
-      • Azure bluet
-      • Grass
+      + Pink, white, and red tulips
+      + Oxeye daisy
+      + Poppy
+      + Dandelion
+      + Azure bluet
+      + Grass
     - Caves
-      • Common
+      + Common
 
   * Jungle
     - Regular grass (50%) & Light grass (50%)
     - Natural features
-      • Jungle trees, giant jungle trees
-      • Melons spawn by themselves
-      • Large bushes spawn
+      + Jungle trees, giant jungle trees
+      + Melons spawn by themselves
+      + Large bushes spawn
     - Flowers
-      • Orange tulip
-      • Light blue orchid
-      • Allium
-      • Berry bush
-      • Grass (50%) & Ferns (50%)
+      + Orange tulip
+      + Light blue orchid
+      + Allium
+      + Berry bush
+      + Grass (50%) & Ferns (50%)
     - Caves
-      • Common
-      • Vines and amethyst are more common
+      + Common
+      + Vines and amethyst are more common
 
   * Jungle
     - Stone
     - Natural features
-      • Snow spawns above y COORD, 50% chance between COORD
+      + Snow spawns above y COORD, 50% chance between COORD
     - Flowers
-      • None
+      + None
     - Caves
-      • Very common
-      • Emeralds and dripstone spawn
-
----
-
-• Added n structures
-
-temple
-well
-ruined portal
-ruins
-
----
-
-• Added n ores
-+ granite, andesite, diorite, tuff, smooth basalt, amethyst, dripstone, cave vines, mushrooms
-
----
-
-• Added fog
+      + Very common
+      + Emeralds and dripstone spawn
++ Added 4 structures
+  * Temple
+    - Tall building w/ bookshelves and treasure in center
+    - Spawns in all biomes but mountains, but 9x more common in jungle
+  * Well
+    - Spawns in deserts
+    - Occasionally contains gold block below
+  * Ruined portal
+    - Many different variations
+    - Spawns in all biomes
+  * Ruins
+    - Tall cobblestone pillars w/ treasure
+    - Spawns everywhere, but 2x more common in plains
+    - 10% chance of spawning with ore blocks in addition to regular ores
++ Added 10 ores
+  * Diamond
+    - ~2.8 veins per chunk
+    - Below y16
+    - Up to 10 vein
+  * Emerald
+    - ~11.4 veins per chunk
+    - Below y40
+    - 1 veins only
+    - Only in mountain biome
+  * Iron
+    - ~50 veins per chunk
+    - Up to 11 vein
+  * Gold
+    - ~6.3 veins per chunk
+    - Below y32
+    - Up to 11 vein
+  * Coal
+    - ~60 veins per chunk
+    - Up to 13 vein
+  * Copper
+    - ~40 veins per chunk
+    - Up to 5 vein
+  * Redstone
+    - ~12 veins per chunk
+    - Below y32
+    - Up to 9 vein
+  * Lapis
+    - ~3.1 veins per chunk
+    - Below y32
+    - Up to 5 vein
+  * Ancient debris
+    - ~0.5 veins per chunk
+    - Below y16
+    - Up to 5 vein
+  * Vocanic rock
+    - ~0.1 veins per chunk
+    - Below y20
+    - 1 vein only
++ Added fog
   * Dependent on render distance
   * Increases when high up
   * Color of surface fog varies depending if day or night
   * Fog darkens and becomes closer to player when deep in caves
-
----
-
-• Added menu
++ Added menu
   * Fog and day/night cycle can be toggled on and off
   * Render distance can be changed between and including 1 and 16
   * Game can save as text (via pause menu) and be loaded (via homepage)

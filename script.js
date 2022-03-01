@@ -728,7 +728,9 @@ var init = delag(function() {
         sounds["tnt"].stop();
         sounds["tnt"].play();
         setTimeout(function() {
-          explode(x, y, z, 5, 0.1);
+          if (blockData[world.getBlock(x, y, z)].name == "tnt") {
+            explode(x, y, z, 5, 0.1);
+          }
         }, 1000);
       }
     },
@@ -739,7 +741,9 @@ var init = delag(function() {
         sounds["tnt"].stop();
         sounds["tnt"].play();
         setTimeout(function() {
-          explode(x, y, z, 9, 0.12);
+          if (blockData[world.getBlock(x, y, z)].name == "megaTnt") {
+            explode(x, y, z, 9, 0.12);
+          }
         }, 1000);
       }
     },
@@ -750,7 +754,9 @@ var init = delag(function() {
         sounds["tnt"].stop();
         sounds["tnt"].play();
         setTimeout(function() {
-          explode(x, y, z, 15, 0.14);
+          if (blockData[world.getBlock(x, y, z)].name == "nuke") {
+            explode(x, y, z, 15, 0.14);
+          }
         }, 1000);
       }
     },
@@ -3911,7 +3917,7 @@ var init = delag(function() {
 
         }
         for (var j = 2; j <= 50; j++) {
-          if (j < 10 && random() < 0.008 && !this.getBlock(i, j, k) && this.getBlock(i, j-1, k) && !this.getBlock(i, j-1, k).crossShape) {
+          if (j < 10 && random() < 0.006 && !this.getBlock(i, j, k) && this.getBlock(i, j-1, k) && !this.getBlock(i, j-1, k).crossShape) {
             this.setBlock(i, j, k, blockIds.amethystCluster);
 
           }
@@ -3928,13 +3934,13 @@ var init = delag(function() {
         // Redstone: 12
         // Ancient Debris: 0.5
         // Volcanic Rock: 0.1
-        // Diamond: 2.8
+        // Diamond: 2.6
         // Lapis: 3.1
         // Emerald: 11.4 in mountains only
         // Copper: 40
         ground -= 4;
 
-        if (random() < 2.8 / 256) {
+        if (random() < 2.6 / 256) {
             var y = random() * 16 | 0 + 1;
             y = y < ground ? y : ground;
             y = y < 2 ? 2 : y;
@@ -4016,7 +4022,7 @@ var init = delag(function() {
             }
         }
 
-        if (random() < 50 / 256) {
+        if (random() < 45 / 256) {
             var y = random() * ground | 0 + 1;
             y = y < ground - 8 ? y : ground - 8;
             y = y < 2 ? 2 : y;
@@ -4037,7 +4043,7 @@ var init = delag(function() {
             }
         }
 
-        if (random() < 60 / 256) {
+        if (random() < 55 / 256) {
             var y = random() * ground | 0 + 1;
             y = y < ground - 8 ? y : ground - 8;
             y = y < 2 ? 2 : y;
@@ -4059,7 +4065,7 @@ var init = delag(function() {
         }
 
         if (random() < 6.3 / 256) {
-            var y = random() * 32 | 0 + 1;
+            var y = random() * 28 | 0 + 1;
             y = y < ground ? y : ground;
             y = y < 2 ? 2 : y;
             if (this.getBlock(i, y, k) && !blockData[this.getBlock(i, y, k)].crossShape) {
@@ -4080,7 +4086,7 @@ var init = delag(function() {
         }
 
         if (random() < 12 / 256) {
-            var y = random() * 32 | 0 + 1;
+            var y = random() * 24 | 0 + 1;
             y = y < ground ? y : ground;
             y = y < 2 ? 2 : y;
             if (this.getBlock(i, y, k) && !blockData[this.getBlock(i, y, k)].crossShape) {
@@ -4101,7 +4107,7 @@ var init = delag(function() {
         }
 
         if (random() < 3.1 / 256) {
-            var y = random() * 32 | 0 + 1;
+            var y = random() * 26 | 0 + 1;
             y = y < ground ? y : ground;
             y = y < 2 ? 2 : y;
             if (this.getBlock(i, y, k) && !blockData[this.getBlock(i, y, k)].crossShape) {
