@@ -5709,7 +5709,7 @@ var init = delag(function() {
           textSize(12);
           ctx.textAlign = 'right';
           ctx.fillStyle = "white";
-          text("Zachary Hoffman", width - 10, height - 10);
+          text("v1.0.0", width - 10, height - 10);
         }
         else if (screen === "options menu") {
           ctx.clearRect(0, 0, canvas.width, canvas.height);
