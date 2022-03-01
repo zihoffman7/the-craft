@@ -3272,7 +3272,7 @@ var init = delag(function() {
             this.setBlock(i, ground+1, k, blockIds.deadBush);
           }
 
-          if (random() < 0.0008 && i > 3 && i < 13 && k > 3 && k < 13 && this.getBlock(i, ground, k) && noise(wx * caveSmooth, ground * caveSmooth, wz * caveSmooth) > caveFreq) {
+          if (random() < 0.0005 && i > 3 && i < 13 && k > 3 && k < 13 && this.getBlock(i, ground, k) && noise(wx * caveSmooth, ground * caveSmooth, wz * caveSmooth) > caveFreq) {
               this.setBlock(i, ground+1, k, blockIds.Water);
 
               this.setBlock(i, ground, k-1, blockIds.sand);

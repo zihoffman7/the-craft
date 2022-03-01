@@ -6,7 +6,7 @@ Bug Fixes
 • Prevented beehives from spawning in extraneous locations
 • Fixed odd ruin generation
 • Decreased probablilties for amount of pumpkins in pumpkin patch
-
+• Increased rarity of desert wells
 
 v1.0.0 - 2/27/22
 ----------------------
@@ -50,8 +50,8 @@ Alpha version
     - Flowers
       • Dead bush
     - Caves
-      • Very few 
-    
+      • Very few
+
   * Plains
     - Grassy surface
     - Natural features
@@ -62,7 +62,7 @@ Alpha version
       • Poppy
       • Cornflower
       • Oxeye Daisy
-      • Grass 
+      • Grass
     - Caves
       • Very few
       • Hanging roots are twice as common
@@ -82,7 +82,7 @@ Alpha version
       • Grass
     - Caves
       • Common
-      
+
   * Jungle
     - Regular grass (50%) & Light grass (50%)
     - Natural features
