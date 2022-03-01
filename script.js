@@ -1472,7 +1472,7 @@ var init = delag(function() {
     caveSmooth: 0.04,
     caveFrequency: 0.39,
     biome: {
-      field: {
+      forest: {
         height: 100,
         smooth: 0.015,
         extra: 20,
@@ -2987,7 +2987,7 @@ var init = delag(function() {
       return "plains"
     }
     else if (biome < 0.54) {
-      return "field";
+      return "forest";
     }
     else if (biome < 0.6) {
       return "jungle"
@@ -3081,15 +3081,16 @@ var init = delag(function() {
       this.maxY = y > this.maxY ? y : this.maxY;
     }
   };
-  Chunk.prototype.spawnPillar = function(x, z, minY, biome, blocks, gems) {
-    var bb = getBiome(noise((this.x + x) * generator.biomeSmooth, (this.z + z) * generator.biomeSmooth));
-    grd = Math.round(noise(x * generator.biome[bb].smooth, z * generator.biome[bb].smooth) * generator.biome[bb].height) + generator.biome[bb].extra;
-    for (var g = grd-4; g <= minY + Math.floor(Math.random()*8); g++) {
+  Chunk.prototype.spawnPillar = function(xx, zz, yBuff, blocks, gems) {
+    var bb = getBiome(noise((this.x + xx) * generator.biomeSmooth, (this.z + zz) * generator.biomeSmooth));
+
+    grd = Math.round(noise(xx * generator.biome[bb].smooth, zz * generator.biome[bb].smooth) * generator.biome[bb].height) + generator.biome[bb].extra;
+    for (var g = grd-10; g <= grd + yBuff + Math.floor(Math.random()*8); g++) {
       if (Math.random() < 0.05) {
-        this.setBlock(x, g, z, choice(gems));
+        this.setBlock(xx, g, zz, choice(gems));
       }
       else {
-        this.setBlock(x, g, z, choice(blocks));
+        this.setBlock(xx, g, zz, choice(blocks));
       }
     }
   };
@@ -3129,7 +3130,7 @@ var init = delag(function() {
         wx = this.x + i;
         wz = this.z + k;
         ground = Math.round(noise(wx * generator.biome[biome].smooth, wz * generator.biome[biome].smooth) * generator.biome[biome].height) + generator.biome[biome].extra;
-        if (biome == "jungle" || biome == "plains" || biome == "field") {
+        if (biome == "jungle" || biome == "plains" || biome == "forest") {
           if (random() < 0.05 && noise(wx * caveSmooth, ground * caveSmooth, wz * caveSmooth) > caveFreq && (this.getBlock(i, ground, k) == blockIds.grass || this.getBlock(i, ground, k) == blockIds.lightGrass)) {
             this.setBlock(i, ground+1, k, (biome == "jungle") ? choice([blockIds.fern, blockIds.grassy]) : blockIds.grassy);
           }
@@ -3155,9 +3156,9 @@ var init = delag(function() {
             }
           }
         }
-        if (biome == "field") {
+        if (biome == "forest") {
           var gg = Math.round(noise((wx+i) * generator.biome[biome].smooth, (wz+k) * generator.biome[biome].smooth) * generator.biome[biome].height) + generator.biome[biome].extra;
-          if (random() < 0.0005 && world.getBlock(wx+i, gg, wz+k) != 0 && noise(wx * caveSmooth, ground * caveSmooth, wz * caveSmooth) > caveFreq) {
+          if (random() < 0.0008 && world.getBlock(wx+i, gg, wz+k) != 0 && world.getBlock(wx+i, gg+1, wz+k) == 0 && noise(wx * caveSmooth, ground * caveSmooth, wz * caveSmooth) > caveFreq && i < 13 && i > 3 && k < 13 && k > 3) {
             spawnMushroom(wx+i, gg+1, wz+k);
           }
           if (random() < 0.01 && noise(wx * caveSmooth, ground * caveSmooth, wz * caveSmooth) > caveFreq) {
@@ -3173,7 +3174,7 @@ var init = delag(function() {
               this.setBlock(i, top + 1, k, blockIds.leaves);
               this.setBlock(i, ground, k, blockIds.dirt);
 
-              if (random() < 0.1 && blockData[this.getBlock(i, top-3, k)].name == "oakLog") {
+              if (random() < 0.08 && blockData[this.getBlock(i, top-3, k)].name == "oakLog" && noise((wx+i) * caveSmooth, ground * caveSmooth, (wz+k) * caveSmooth) > caveFreq && i < 14 && i > 1 && k < 14 && k > 1) {
                 var coord = [0, 0];
                 coord[choice([0, 1])] = choice([-1, 1]);
                 this.setBlock(i+coord[0], top-3, k+coord[1], blockIds.beeNest);
@@ -3509,13 +3510,13 @@ var init = delag(function() {
             for (var xx = i; xx < i + 14; xx++) {
               for (var zz = k; zz < k + 14; zz++) {
                 var grdg = Math.round(noise(xx * generator.biome[biome].smooth, zz * generator.biome[biome].smooth) * generator.biome[biome].height + generator.biome[biome].extra );
-                if (random() < 0.08 && this.getBlock(xx, grdg, zz) == blockIds.grass) {
+                if (random() < 0.07 && this.getBlock(xx, grdg, zz) == blockIds.grass) {
                   top = grdg + Math.floor(4.5 + random(2.5));
                   for (var j = grdg + 1; j <= top; j++) {
+                      explode(xx, j, zz, 0, 0);
                       this.setBlock(xx, j, zz, combo.log);
                   }
                   this.setBlock(xx, top + 1, zz, combo.leaf);
-                  this.setBlock(xx, ground, zz, blockIds.dirt);
 
                   //Bottom leaves
                   for (var x = -2; x <= 2; x++) {
@@ -3583,7 +3584,7 @@ var init = delag(function() {
             for (var xx = i; xx < i + 14; xx++) {
               for (var zz = k; zz < k + 14; zz++) {
                 var grdg = Math.round(noise(xx * generator.biome[biome].smooth, zz * generator.biome[biome].smooth) * generator.biome[biome].height + generator.biome[biome].extra );
-                if (random() < 0.1 && this.getBlock(xx, grdg, zz) == blockIds.grass) {
+                if (random() < 0.08 && this.getBlock(xx, grdg, zz) == blockIds.grass) {
                   this.setBlock(xx, grdg + 1, zz, blockIds.pumpkin);
                 }
               }
@@ -3656,26 +3657,14 @@ var init = delag(function() {
             gems = [blockIds.diamondOre, blockIds.goldOre, blockIds.emeraldOre, blockIds.lapisOre, blockIds.diamondBlock, blockIds.lapisBlock, blockIds.emeraldBlock, blockIds.goldBlock];
           }
           for (var x = 3; x < 8; x++) {
-            if (random() < 0.5) {
               for (var c = x; c >= 0; c--) {
                 if (random() < 0.25) {
-                  this.spawnPillar(i+x, k+c, ground+4, biome, [blockIds.stoneBricks, blockIds.mossyStoneBricks, blockIds.cobblestone, blockIds.mossyCobble, blockIds.chiseledStoneBricks], gems);
+                  this.spawnPillar(i+x, k+c, 6, [blockIds.stoneBricks, blockIds.mossyStoneBricks, blockIds.cobblestone, blockIds.mossyCobble, blockIds.chiseledStoneBricks], gems);
                 }
                 if (random() < 0.25) {
-                  this.spawnPillar(i+x, k-c, ground+4, biome, [blockIds.stoneBricks, blockIds.mossyStoneBricks, blockIds.cobblestone, blockIds.mossyCobble, blockIds.chiseledStoneBricks], gems);
+                  this.spawnPillar(i+x, k-c, 6, [blockIds.stoneBricks, blockIds.mossyStoneBricks, blockIds.cobblestone, blockIds.mossyCobble, blockIds.chiseledStoneBricks], gems);
                 }
               }
-            }
-            else {
-              for (var c = x; c >= 0; c--) {
-                if (random() < 0.25) {
-                  this.spawnPillar(i+x, k+c, ground+4, biome, [blockIds.stoneBricks, blockIds.mossyStoneBricks, blockIds.cobblestone, blockIds.mossyCobble, blockIds.chiseledStoneBricks], gems);
-                }
-                if (random() < 0.25) {
-                  this.spawnPillar(i-x, k-c, ground+4, biome, [blockIds.stoneBricks, blockIds.mossyStoneBricks, blockIds.cobblestone, blockIds.mossyCobble, blockIds.chiseledStoneBricks], gems);
-                }
-              }
-            }
           }
 
 
@@ -3690,7 +3679,7 @@ var init = delag(function() {
                 treasure: [blockIds.lapisBlock, blockIds.diamondBlock, blockIds.copperBlock]
               }
             ],
-            field: [
+            forest: [
               {
                 main: [blockIds.smoothBasalt],
                 treasure: [blockIds.diamondBlock, blockIds.lapisBlock, blockIds.emeraldBlock]
@@ -4259,7 +4248,7 @@ var init = delag(function() {
         var caveSmooth = generator.biome[biome].caveSmooth;
         var caveFreq = generator.biome[biome].caveFrequency;
 
-        if (biome == "field" || biome == "plains" || biome == "jungle") {
+        if (biome == "forest" || biome == "plains" || biome == "jungle") {
           gen = Math.round(noise((trueX + i) * smoothness, (trueZ + k) * smoothness) * hilliness) + generator.extra;
 
           if (noise((chunk.x + i) * caveSmooth, (gen) * caveSmooth, (chunk.z + k) * caveSmooth) > caveFreq) {
@@ -4454,10 +4443,11 @@ var init = delag(function() {
     return this.loaded[X * this.lwidth + Z].getBlock(x & 15, y, z & 15);
   };
 
-  var setBlock = function(x, y, z, blockID, lazy) {
+  var setBlock = function(x, y, z, blockID, expl, lazy) {
     if (!this.chunks[x >> 4] || !this.chunks[x >> 4][z >> 4]) {
       return;
     }
+    if (expl) { explode(x, y, z, 0, 0); }
 
     if (y == 0 && blockData[blockID].textures[0] != "bedrock") {
       return;
@@ -5407,6 +5397,11 @@ var init = delag(function() {
     else if (screen === "inventory") {
       clickInv();
     }
+    else if (screen === "main menu") {
+      if (button(width - 100, height - 40, width, height)) {
+        window.location.href = window.location.hostname + "/updates.txt";
+      }
+    }
     else if (screen === "options menu") {
       if (button(0, 125, 50, 50)) {
         if (renderDistance > 1) {
@@ -5709,7 +5704,7 @@ var init = delag(function() {
           textSize(12);
           ctx.textAlign = 'right';
           ctx.fillStyle = "white";
-          text("v1.0.0", width - 10, height - 10);
+          text("v1.0.1", width - 10, height - 10);
         }
         else if (screen === "options menu") {
           ctx.clearRect(0, 0, canvas.width, canvas.height);

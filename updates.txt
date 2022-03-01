@@ -1,0 +1,139 @@
+v1.0.1 - 3/1/22
+----------------------
+Bug Fixes
+----------------------
+• Prevented dirt spawning instead of wood for autumn and pink trees
+• Prevented beehives from spawning in extraneous locations
+• Fixed odd ruin generation
+• Decreased probablilties for amount of pumpkins in pumpkin patch
+
+
+v1.0.0 - 2/27/22
+----------------------
+Alpha version
+----------------------
+
+• Added 180 blocks
+
+  * Slime block
+    - Bounciness
+
+  * Honey block
+    - Slower falling
+
+  * Ice
+    - Slipping
+
+  * Soul sand/Wither rose/Berry bush/Honey block/Slime block
+    - Slowed movement
+
+  * TNT/Mega TNT/Nuke
+    - Spherical explosion
+    - Knockback based on distance to explosion
+    - Blocks not able to be exploded by TNT
+      • Bedrock
+      • Obsidian/Crying obsidian
+      • Ancient debris
+      • Volcanic rock
+
+  * Lodestone
+    - Essentially a lucky block
+
+---
+
+• Added 5 Biomes
+
+  * Desert
+    - Sandy surface
+    - Natural features
+      • Cacti
+    - Flowers
+      • Dead bush
+    - Caves
+      • Very few 
+    
+  * Plains
+    - Grassy surface
+    - Natural features
+      • No green trees
+      • Cherry and autumn trees spawn occasionally
+      • Pumpkin patches spawn occasionally, can also spawn a pumpkin solo
+    - Flowers
+      • Poppy
+      • Cornflower
+      • Oxeye Daisy
+      • Grass 
+    - Caves
+      • Very few
+      • Hanging roots are twice as common
+
+  * Forest
+    - Grassy surface
+    - Natural features
+      • Frequent oak and birch trees
+      • Rare mushroom trees
+      • Beehives spawn on trees occasionally
+    - Flowers
+      • Pink, white, and red tulips
+      • Oxeye daisy
+      • Poppy
+      • Dandelion
+      • Azure bluet
+      • Grass
+    - Caves
+      • Common
+      
+  * Jungle
+    - Regular grass (50%) & Light grass (50%)
+    - Natural features
+      • Jungle trees, giant jungle trees
+      • Melons spawn by themselves
+      • Large bushes spawn
+    - Flowers
+      • Orange tulip
+      • Light blue orchid
+      • Allium
+      • Berry bush
+      • Grass (50%) & Ferns (50%)
+    - Caves
+      • Common
+      • Vines and amethyst are more common
+
+  * Jungle
+    - Stone
+    - Natural features
+      • Snow spawns above y COORD, 50% chance between COORD
+    - Flowers
+      • None
+    - Caves
+      • Very common
+      • Emeralds and dripstone spawn
+
+---
+
+• Added n structures
+
+temple
+well
+ruined portal
+ruins
+
+---
+
+• Added n ores
++ granite, andesite, diorite, tuff, smooth basalt, amethyst, dripstone, cave vines, mushrooms
+
+---
+
+• Added fog
+  * Dependent on render distance
+  * Increases when high up
+  * Color of surface fog varies depending if day or night
+  * Fog darkens and becomes closer to player when deep in caves
+
+---
+
+• Added menu
+  * Fog and day/night cycle can be toggled on and off
+  * Render distance can be changed between and including 1 and 16
+  * Game can save as text (via pause menu) and be loaded (via homepage)
