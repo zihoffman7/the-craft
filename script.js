@@ -742,7 +742,7 @@ var init = delag(function() {
         sounds["tnt"].play();
         setTimeout(function() {
           if (blockData[world.getBlock(x, y, z)].name == "megaTnt") {
-            explode(x, y, z, 9, 0.12);
+            explode(x, y, z, 8, 0.12);
           }
         }, 1000);
       }
@@ -755,7 +755,7 @@ var init = delag(function() {
         sounds["tnt"].play();
         setTimeout(function() {
           if (blockData[world.getBlock(x, y, z)].name == "nuke") {
-            explode(x, y, z, 15, 0.14);
+            explode(x, y, z, (blockData[world.getBlock(x, y+1, z)].name == "witherRose" ? 30 : (blockData[world.getBlock(x+1, y, z)].name == "witherRose" && blockData[world.getBlock(x-1, y, z)].name == "witherRose" && blockData[world.getBlock(x, y, z+1)].name == "witherRose" && blockData[world.getBlock(x, y, z-1)].name == "witherRose") ? 60 : 15), 0.14);
           }
         }, 1000);
       }
@@ -771,7 +771,7 @@ var init = delag(function() {
           explode(x, y, z, 1, 0);
           choice([
             function() {
-              explode(x, y, z, choice([3, 4, 5]), 0.1);
+              explode(x, y, z, choice([3, 4, 5, 21]), 0.1);
             },
             function() {
               explode(x, y-1, z, 1, 0);
@@ -802,10 +802,11 @@ var init = delag(function() {
               for (var yy = Math.round(p.y); yy > 1; yy--) {
                 explode(Math.round(p.x), yy, Math.round(p.z), 1, 0);
               }
+	      explode(Math.round(p.x), 1, Math.round(p.z), 1, 0);
               world.setBlock(Math.round(p.x), 1, Math.round(p.z), blockIds.slime)
             },
             function() {
-              p.velocity.y = 2;
+              p.velocity.y = 1.8;
             },
             function() {
               var oldY = p.y, oldX = p.x, oldZ = p.z;
@@ -817,7 +818,7 @@ var init = delag(function() {
               }, 3000);
             },
             function() {
-              world.setBlock(x, y, z, blockIds.witherRose);
+              world.setBlock(x, y, z, choice([blockIds.witherRose, blockIds.amethystCluster]));
             },
             function() {
               spawnMushroom(x, y, z);
@@ -3516,7 +3517,7 @@ var init = delag(function() {
             for (var xx = i; xx < i + 14; xx++) {
               for (var zz = k; zz < k + 14; zz++) {
                 var grdg = Math.round(noise(xx * generator.biome[biome].smooth, zz * generator.biome[biome].smooth) * generator.biome[biome].height + generator.biome[biome].extra );
-                if (random() < 0.07 && this.getBlock(xx, grdg, zz) == blockIds.grass) {
+                if (random() < 0.05 && this.getBlock(xx, grdg, zz) == blockIds.grass) {
                   top = grdg + Math.floor(4.5 + random(2.5));
                   for (var j = grdg + 1; j <= top; j++) {
                       explode(xx, j, zz, 0, 0);

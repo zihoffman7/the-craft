@@ -23,6 +23,7 @@ Bug fixes, balance changes
     - Now spawns below y26 instead of y32
 + Increased rarity of amethyst clusters
 + Prevented TNT and like blocks from exploding if broken before detonation
++ Added a secret mega nukes :)
 
 
 v1.0.0 - 2/27/22
