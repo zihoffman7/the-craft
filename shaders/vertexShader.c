@@ -9,6 +9,7 @@ uniform vec3 skyColor;
 uniform sampler2D uSampler;
 uniform float uTime;
 uniform float uDist;
+uniform bool lightDepthChange;
 uniform vec3 uPos;
 varying vec2 vTexture;
 varying float vFog;
@@ -18,7 +19,7 @@ void main(void) {
   if (color.a != 1.0) {
     color.a = mix(color.a, 0.0, vFog);
   }
-  color = vec4(mix(color.rgb * vShadow / 16.0, (uPos.y < 40.0 ? skyColor/40.0 : skyColor) , vFog), color.a);
+  color = vec4(mix(color.rgb * vShadow / 16.0, (lightDepthChange && uPos.y < 40.0 ? skyColor/40.0 : skyColor) , vFog), color.a);
   gl_FragColor = color;
   if (gl_FragColor.a == 0.0) {
     discard;

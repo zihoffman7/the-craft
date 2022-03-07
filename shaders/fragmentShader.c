@@ -9,16 +9,17 @@ uniform mat4 uView;
 uniform mat4 uProjection;
 uniform bool uEdge;
 uniform float uTime;
+uniform bool lightDepthChange;
 uniform float uDist;
 uniform float aBlocklight;
 uniform vec3 uPos;
 varying float vFog;
 uniform vec3 skyColor;
-float dUp = (uPos.y < 90.0) ? 0.0 : (uPos.y - 90.0) / 200.0;
+float dUp = (lightDepthChange ? ((uPos.y < 90.0) ? 0.0 : (uPos.y - 90.0) / 200.0) : 0.0);
 float unDist;
 
 void main(void) {
-  unDist = ((uPos.y < 50.0) ? ((uPos.y <= 26.0) ? 20.0 + uDist * (26.0-25.0)/25.0 : (20.0 + uDist * (uPos.y-25.0)/25.0)) : uDist);
+  unDist = (lightDepthChange ? ((uPos.y < 50.0) ? ((uPos.y <= 26.0) ? 20.0 + uDist * (26.0-25.0)/25.0 : (20.0 + uDist * (uPos.y-25.0)/25.0)) : uDist) : uDist);
   vTexture = aTexture;
   vShadow = (uTime + 1.0) * aShadow * max(aBlocklight / 16.0, min(aSkylight / 16.0 * uTime * 0.9 + 0.1, 1.0));
   float range = max(unDist / 5.0, 2.0);

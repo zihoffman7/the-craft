@@ -1,3 +1,33 @@
+v1.1.0 - 3/6/22
+----------------------
+New game modes!
+----------------------
++ Adventure
+  * No block breaking/placing
++ Superflat
+  * Note: saves not supported yet
++ Explosive
+  * Only explosives
+  * No flying
++ Block hunt
+  * Figure out what block to collect by solving riddles
+  * Different riddles give different points
+  * Saves intentionally disabled
++ Removed options in main menu, was too redundant
+
+
+v1.0.2 - 3/3/22
+----------------------
+Block modifications
+----------------------
++ Removed normal ice block, now the only ice is packed ice
++ Changed lucky block texture from lodestone to a new enchantment table spinoff
++ Lodestone now allows teleporting
++ Added more lucky block features
++ Replaced volcanic rock texture and renamed to gilded debris
++ Shrunk blast radius of mega TNT
+
+
 v1.0.1 - 3/1/22
 ----------------------
 Bug fixes, balance changes
@@ -5,7 +35,7 @@ Bug fixes, balance changes
 + Prevented dirt spawning instead of wood for autumn and pink trees
 + Prevented beehives from spawning in extraneous locations
 + Fixed odd ruin generation
-+ Decreased probablilties for amount of pumpkins in pumpkin patch
++ Decreased probabilities for amount of pumpkins in pumpkin patch
 + Increased rarity of desert wells
 + Added update log to home page
 + Modified ore rarities
@@ -23,7 +53,7 @@ Bug fixes, balance changes
     - Now spawns below y26 instead of y32
 + Increased rarity of amethyst clusters
 + Prevented TNT and like blocks from exploding if broken before detonation
-+ Added a secret mega nukes :)
++ Added a secret mega nuke and “big daddy” nuke :)
 
 
 v1.0.0 - 2/27/22
@@ -31,19 +61,14 @@ v1.0.0 - 2/27/22
 Alpha version
 ----------------------
 + Added 180 blocks
-
   * Slime block
     - Bounciness
-
   * Honey block
     - Slower falling
-
   * Ice
     - Slipping
-
   * Soul sand/Wither rose/Berry bush/Honey block/Slime block
     - Slowed movement
-
   * TNT/Mega TNT/Nuke
     - Spherical explosion
     - Knockback based on distance to explosion
@@ -52,11 +77,9 @@ Alpha version
       + Obsidian/Crying obsidian
       + Ancient debris
       + Volcanic rock
-
   * Lodestone
     - Essentially a lucky block
 + Added 5 Biomes
-
   * Desert
     - Sandy surface
     - Natural features
@@ -65,7 +88,6 @@ Alpha version
       + Dead bush
     - Caves
       + Very few
-
   * Plains
     - Grassy surface
     - Natural features
@@ -80,7 +102,6 @@ Alpha version
     - Caves
       + Very few
       + Hanging roots are twice as common
-
   * Forest
     - Grassy surface
     - Natural features
@@ -96,7 +117,6 @@ Alpha version
       + Grass
     - Caves
       + Common
-
   * Jungle
     - Regular grass (50%) & Light grass (50%)
     - Natural features
@@ -112,11 +132,10 @@ Alpha version
     - Caves
       + Common
       + Vines and amethyst are more common
-
-  * Jungle
+  * Mountain
     - Stone
     - Natural features
-      + Snow spawns above y COORD, 50% chance between COORD
+      + Snow spawns above y92, 50% chance at y92
     - Flowers
       + None
     - Caves
@@ -171,10 +190,10 @@ Alpha version
     - ~0.5 veins per chunk
     - Below y16
     - Up to 5 vein
-  * Vocanic rock
+  * Volcanic rock
     - ~0.1 veins per chunk
     - Below y20
-    - 1 vein only
+    - 1 veins only
 + Added fog
   * Dependent on render distance
   * Increases when high up
