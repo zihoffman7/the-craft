@@ -1,3 +1,16 @@
+v1.2.0 - 3/8/22
+----------------------
+The explosion update
+----------------------
++ Reworked explosions
+  * Blocks now have blast resistances
+    - For example, leaves will get blown off of trees even if far from the crater
+  * Modified TNT/Mega TNT/Nuke blast radii to reflect new blast resistances
++ Fixed pumpkin riddle in Block Hunt
++ Balanced block scores to reflect difficulty more accurately
++ Press 'R' in block hunt to skip the block and get a new riddle
+
+
 v1.1.0 - 3/6/22
 ----------------------
 New game modes!

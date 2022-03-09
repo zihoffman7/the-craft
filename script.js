@@ -534,7 +534,10 @@ var init = delag(function() {
       shadow: false,
       explodable: false
     },
-    { name: "dirt" },
+    {
+      name: "dirt",
+      blastResistance: 0.2
+    },
     { name: "stone" },
     {
       name: "craftingTable",
@@ -544,7 +547,7 @@ var init = delag(function() {
       name: "glass",
       transparent: true,
       shadow: false,
-      explodable: false
+      blastResistance: 0.8,
     },
     { name: "cobblestone" },
     { name: "mossyCobble" },
@@ -589,28 +592,50 @@ var init = delag(function() {
       textures: ["gildedDebrisTop", "gildedDebrisSide"],
       explodable: false
     },
-    { name: "coalBlock" },
     {
-	name: "copperBlock",
-	onload: function(x, y, z){
+      name: "coalBlock",
+      blastResistance: 0.4,
+    },
+    {
+      name: "copperBlock",
+	    onload: function(x, y, z) {
         if (((blockData[world.getBlock(x+1, y-2, z)].dtexture[0] == "copperBlock" && blockData[world.getBlock(x-1, y-2, z)].dtexture[0] == "copperBlock") || (blockData[world.getBlock(x, y-2, z-1)].dtexture[0] == "copperBlock" && blockData[world.getBlock(x, y-2, z+1)].dtexture[0] == "copperBlock")) && blockData[world.getBlock(x, y-2, z)].dtexture[0] == "copperBlock" && blockData[world.getBlock(x, y-1, z)].dtexture[0] == "copperBlock") {
           sounds["tnt"].stop();
           sounds["tnt"].play();
-          explode(x, y-1, z, 5, 0.5);
+          explode(x, y-1, z, 15, 0.2);
           world.setBlock(x, y, z, blockIds.netheriteBlock);
           world.setBlock(x, y-1, z, blockIds.netheriteBlock);
           world.setBlock(x, y-2, z, blockIds.netheriteBlock);
           world.setBlock(x+1, y-2, z, blockIds.netheriteBlock);
           world.setBlock(x-1, y-2, z, blockIds.netheriteBlock);
         }
-      }
+      },
+      blastResistance: 0.4,
     },
-    { name: "ironBlock" },
-    { name: "goldBlock" },
-    { name: "redstoneBlock" },
-    { name: "lapisBlock" },
-    { name: "emeraldBlock" },
-    { name: "diamondBlock"},
+    {
+      name: "ironBlock",
+      blastResistance: 0.4,
+    },
+    {
+      name: "goldBlock",
+      blastResistance: 0.4,
+    },
+    {
+      name: "redstoneBlock",
+      blastResistance: 0.4,
+    },
+    {
+      name: "lapisBlock",
+      blastResistance: 0.4,
+    },
+    {
+      name: "emeraldBlock",
+      blastResistance: 0.4,
+    },
+    {
+      name: "diamondBlock",
+      blastResistance: 0.5,
+    },
     {
       name: "netheriteBlock",
       explodable: false
@@ -619,71 +644,106 @@ var init = delag(function() {
     { name: "cobbledDeepslate" },
     { name: "deepslateTiles" },
     { name: "deepslateBricks" },
-    { name: "oakPlanks" },
+    {
+      name: "oakPlanks",
+      blastResistance: 0.2,
+    },
     {
       name: "oakLog",
       textures: [ "logTop", "logSide" ],
+      blastResistance: 0.2,
     },
-    { name: "acaciaPlanks" },
+    {
+      name: "acaciaPlanks",
+      blastResistance: 0.2,
+    },
     {
       name: "acaciaLog",
       textures: [ "acaciaLogTop", "acaciaLogSide" ],
+      blastResistance: 0.2,
     },
-    { name: "birchPlanks" },
+    {
+      name: "birchPlanks",
+      blastResistance: 0.2,
+    },
     {
       name: "birchLog",
       textures: [ "birchLogTop", "birchLogSide" ],
+      blastResistance: 0.2,
     },
-    { name: "darkOakPlanks" },
+    {
+      name: "darkOakPlanks",
+      blastResistance: 0.2,
+    },
     {
       name: "darkOakLog",
       textures: [ "darkOakLogTop", "darkOakLogSide" ],
+      blastResistance: 0.2,
     },
-    { name: "junglePlanks" },
+    {
+      name: "junglePlanks",
+      blastResistance: 0.2,
+    },
     {
       name: "jungleLog",
       textures: [ "jungleLogTop", "jungleLogSide" ],
+      blastResistance: 0.2,
     },
-    { name: "sprucePlanks" },
+    {
+      name: "sprucePlanks",
+      blastResistance: 0.2,
+    },
     {
       name: "spruceLog",
       textures: [ "spruceLogTop", "spruceLogSide" ],
+      blastResistance: 0.2,
     },
     {
       name: "grass",
       textures: [ "dirt", "grassTop", "grassSide" ],
+      blastResistance: 0.2
     },
     {
       name: "lightGrass",
       textures: ["dirt", "lightGrassTop", "lightGrassSide" ],
+      blastResistance: 0.2
     },
     {
       name: "leaves",
       transparent: true,
+      blastResistance: 0.1
     },
     {
       name: "blueBerryLeaves",
       transparent: true,
+      blastResistance: 0.1
     },
     {
       name: "redBerryLeaves",
       transparent: true,
+      blastResistance: 0.1
     },
     {
       name: "pinkLeaves",
       transparent: true,
+      blastResistance: 0.1
     },
     {
       name: "autumnLeaves",
       transparent: true,
+      blastResistance: 0.1
     },
     {
       name: "cactus",
     	textures: ["cactusBottom", "cactusTop", "cactusSide"],
     	transparent: true,
       cactus: true,
+      blastResistance: 0.1
     },
-    { name: "sand" },
+    {
+      name: "sand",
+      blastResistance: 0.2
+    },
     {
       name:"sandstone",
       textures: ["sandstoneBottom", "sandstoneTop", "sandstone"]
@@ -693,31 +753,39 @@ var init = delag(function() {
       textures: ["sandstoneBottom", "sandstoneTop","chiseledSandstone"]
     },
     {
-      name:"cutSandstone",
+      name: "cutSandstone",
       textures: ["sandstoneBottom", "sandstoneTop","cutSandstone"]
     },
     {
       name:"smoothSandstone",
       textures:"sandstoneTop"
     },
-    { name: "gravel" },
+    {
+      name: "gravel",
+      blastResistance: 0.2
+    },
     {
       name: "obsidian",
-      explodable: false
+      blastResistance: 0.95
     },
     {
       name: "cryingObsidian",
       shadow: false,
-      explodable: false
+      blastResistance: 0.9
     },
-    { name: "netherrack" },
+    {
+      name: "netherrack",
+      blastResistance: 0.1
+    },
     {
       name: "crimsonNylium",
-      textures: ["netherrack", "crimsonNyliumTop", "crimsonNyliumSide"]
+      textures: ["netherrack", "crimsonNyliumTop", "crimsonNyliumSide"],
+      blastResistance: 0.1
     },
     {
       name: "warpedNylium",
-      textures: ["netherrack", "warpedNyliumTop", "warpedNyliumSide"]
+      textures: ["netherrack", "warpedNyliumTop", "warpedNyliumSide"],
+      blastResistance: 0.1
     },
     { name: "netherQuartzOre" },
     { name: "netherGoldOre" },
@@ -782,12 +850,13 @@ var init = delag(function() {
     {
     	name: "tnt",
     	textures: ["tntBottom", "tntTop", "tntSides"],
+      explodable: false,
       onload: function(x, y, z){
         sounds["tnt"].stop();
         sounds["tnt"].play();
         setTimeout(function() {
           if (blockData[world.getBlock(x, y, z)].name == "tnt") {
-            explode(x, y, z, 5, 0.1);
+            explode(x, y, z, 12, 0.07);
           }
         }, 1000);
       }
@@ -795,12 +864,13 @@ var init = delag(function() {
     {
     	name: "megaTnt",
     	textures: ["tntBottom", "tntTop", "nukeSide"],
+      explodable: false,
       onload: function(x, y, z){
         sounds["tnt"].stop();
         sounds["tnt"].play();
         setTimeout(function() {
           if (blockData[world.getBlock(x, y, z)].name == "megaTnt") {
-            explode(x, y, z, 8, 0.12);
+            explode(x, y, z, 18, 0.06);
           }
         }, 1000);
       }
@@ -808,18 +878,20 @@ var init = delag(function() {
     {
     	name: "nuke",
     	textures: ["limeConcrete", "gNukeTop", "gNuke"],
+      explodable: false,
       onload: function(x, y, z){
         sounds["tnt"].stop();
         sounds["tnt"].play();
         setTimeout(function() {
           if (blockData[world.getBlock(x, y, z)].name == "nuke") {
-            explode(x, y, z, (blockData[world.getBlock(x, y+1, z)].name == "witherRose" ? 30 : (blockData[world.getBlock(x+1, y, z)].name == "witherRose" && blockData[world.getBlock(x-1, y, z)].name == "witherRose" && blockData[world.getBlock(x, y, z+1)].name == "witherRose" && blockData[world.getBlock(x, y, z-1)].name == "witherRose") ? 60 : 15), 0.14);
+            explode(x, y, z, (blockData[world.getBlock(x+1, y, z)].name == "witherRose" && blockData[world.getBlock(x-1, y, z)].name == "witherRose" && blockData[world.getBlock(x, y, z+1)].name == "witherRose" && blockData[world.getBlock(x, y, z-1)].name == "witherRose" ? 69 : 32), 0.05);
           }
         }, 1000);
       }
     },
     {
       name: "luckyBlock",
+      explodable: false,
       onload: function(x, y, z){
         setTimeout(function() {
           explode(x, y, z, 1, 0);
@@ -934,13 +1006,15 @@ var init = delag(function() {
     {
       name: "beeNest",
       textures: ["beeNestBottom", "beeNestTop", "beeNestSide", "beeNestFront"],
+      blastResistance: 0.05,
     },
     {
       name: "slime",
     	transparent: true,
     	shadow: false,
       bounciness: 0.8,
-      slide: 0.05
+      slide: 0.05,
+      blastResistance: 0.1,
     },
     {
       name: "honeyBlock",
@@ -948,9 +1022,10 @@ var init = delag(function() {
     	transparent: true,
     	shadow: false,
       bounciness: -0.2,
-      slide: 0.03
+      slide: 0.03,
+      blastResistance: 0.1,
     },
-{
+    {
       name: "Water",
       transparent: true,
       shadow: false,
@@ -966,7 +1041,10 @@ var init = delag(function() {
       solid: false,
       slide: 0.01
     },
-    { name: "redMushroomBlock" },
+    {
+      name: "redMushroomBlock",
+      blastResistance: 0.1,
+    },
     {
       name: "bookshelf",
       textures: [ "oakPlanks", "bookshelf" ],
@@ -994,18 +1072,22 @@ var init = delag(function() {
     {
       name: "hayBlock",
       textures: [ "hayBlockTop", "hayBlockSide" ],
+      blastResistance: 0.2
     },
     {
       name: "driedKelpBlock",
       textures: [ "driedKelpTop", "driedKelpTop", "driedKelpSide" ],
+      blastResistance: 0.2
     },
     {
       name: "pumpkin",
       textures: [ "pumpkinTop", "pumpkinSide" ],
+      blastResistance: 0.15
     },
     {
       name: "melon",
       textures: [ "melonTop", "melonSide" ],
+      blastResistance: 0.15
     },
     { name:"packedIce", slide: 0.85 },
     {
@@ -1018,6 +1100,7 @@ var init = delag(function() {
     	transparent: true,
     	shadow: false,
       crossShape: true,
+      blastResistance: 0.05
     },
     {
       name: "dandelion",
@@ -1025,6 +1108,7 @@ var init = delag(function() {
       transparent: true,
       shadow: false,
       crossShape: true,
+      blastResistance: 0.05
     },
     {
       name: "blueOrchid",
@@ -1032,6 +1116,7 @@ var init = delag(function() {
       transparent: true,
       shadow: false,
       crossShape: true,
+      blastResistance: 0.05
     },
     {
       name: "pinkTulip",
@@ -1039,6 +1124,7 @@ var init = delag(function() {
       transparent: true,
       shadow: false,
       crossShape: true,
+      blastResistance: 0.05
     },
     {
       name: "orangeTulip",
@@ -1046,6 +1132,7 @@ var init = delag(function() {
       transparent: true,
       shadow: false,
       crossShape: true,
+      blastResistance: 0.05
     },
     {
       name: "redTulip",
@@ -1053,6 +1140,7 @@ var init = delag(function() {
       transparent: true,
       shadow: false,
       crossShape: true,
+      blastResistance: 0.05
     },
     {
       name: "whiteTulip",
@@ -1060,6 +1148,7 @@ var init = delag(function() {
       transparent: true,
       shadow: false,
       crossShape: true,
+      blastResistance: 0.05
     },
     {
       name: "azureBluet",
@@ -1067,6 +1156,7 @@ var init = delag(function() {
       transparent: true,
       shadow: false,
       crossShape: true,
+      blastResistance: 0.05
     },
     {
       name: "cornFlower",
@@ -1074,6 +1164,7 @@ var init = delag(function() {
       transparent: true,
       shadow: false,
       crossShape: true,
+      blastResistance: 0.05
     },
     {
       name: "oxeyeDaisy",
@@ -1081,6 +1172,7 @@ var init = delag(function() {
       transparent: true,
       shadow: false,
       crossShape: true,
+      blastResistance: 0.05
     },
     {
       name: "allium",
@@ -1088,6 +1180,7 @@ var init = delag(function() {
       transparent: true,
       shadow: false,
       crossShape: true,
+      blastResistance: 0.05
     },
     {
       name: "sugarCane",
@@ -1095,6 +1188,7 @@ var init = delag(function() {
       transparent: true,
       shadow: false,
       crossShape: true,
+      blastResistance: 0.05
     },
     {
       name: "sweetBerryBush",
@@ -1103,6 +1197,7 @@ var init = delag(function() {
     	shadow: false,
       crossShape: true,
       slide: 0.005,
+      blastResistance: 0.1
     },
     {
       name: "snow",
@@ -1110,6 +1205,7 @@ var init = delag(function() {
       transparent: true,
       shadow: false,
       flat: true,
+      blastResistance: 0.01
     },
     {
       name: "grassy",
@@ -1117,6 +1213,7 @@ var init = delag(function() {
       transparent: true,
       shadow: false,
       crossShape: true,
+      blastResistance: 0.1
     },
     {
       name: "fern",
@@ -1124,6 +1221,7 @@ var init = delag(function() {
       transparent: true,
       shadow: false,
       crossShape: true,
+      blastResistance: 0.1
     },
     {
       name: "witherRose",
@@ -1132,6 +1230,7 @@ var init = delag(function() {
     	shadow: false,
       crossShape: true,
       slide: 0.05,
+      blastResistance: 0.6
     },
     {
       name: "deadBush",
@@ -1139,6 +1238,7 @@ var init = delag(function() {
       transparent: true,
       shadow: false,
       crossShape: true,
+      blastResistance: 0.2
     },
     {
       name: "hangingRoots",
@@ -1146,6 +1246,7 @@ var init = delag(function() {
       transparent: true,
       shadow: false,
       crossShape: true,
+      blastResistance: 0.05
     },
     {
       name: "redMushroom",
@@ -1153,6 +1254,7 @@ var init = delag(function() {
       transparent: true,
       shadow: false,
       crossShape: true,
+      blastResistance: 0.15
     },
     {
       name: "brownMushroom",
@@ -1160,6 +1262,7 @@ var init = delag(function() {
       transparent: true,
       shadow: false,
       crossShape: true,
+      blastResistance: 0.15
     },
     {
       name: "caveVinesBodyLit",
@@ -1167,6 +1270,7 @@ var init = delag(function() {
       transparent: true,
       shadow: false,
       crossShape: true,
+      blastResistance: 0.15
     },
     {
       name: "caveVinesLit",
@@ -1174,6 +1278,7 @@ var init = delag(function() {
       transparent: true,
       shadow: false,
       crossShape: true,
+      blastResistance: 0.15
     },
     {
       name: "dripstoneDown",
@@ -1199,6 +1304,7 @@ var init = delag(function() {
       transparent: true,
       shadow: false,
       crossShape: true,
+      blastResistance: 0.15
     },
   ];
 
@@ -1209,34 +1315,33 @@ var init = delag(function() {
   */
 
 
-  function sphere(X, Y, Z, r, maxR, explosionPower, choices) {
-      var w2 = r * r
-      var h2 = r * r
-      var d2 = r * r
+  function sphere(X, Y, Z, r, maxR, explosionPower) {
+    var w2 = r * r
+    var h2 = r * r
+    var d2 = r * r
 
-      for (var y = -r; y < r; y++) {
-          for (var x = -r; x <= r; x++) {
-              for (var z = -r; z <= r; z++) {
-                  if (x * x / w2 + y * y / h2 + z * z / d2 < 1) {
-                    if (blockData[world.getBlock(X + x, Y + y, Z + z)].explodable) {
-                      world.setBlock(X + x, Y + y, Z + z, blockIds.air);
-
-                    }
-                    if (X + x == Math.round(p.x) && Y + y == Math.round(p.y) && Z + z == Math.round(p.z)) {
-                      p.velocity.x = (x == 0) ? 0 : (x > 0 ? explosionPower : -explosionPower) * (((maxR-r))+1);
-                      p.velocity.y = (y == 0) ? 0 :  (y > 0 ? explosionPower : -explosionPower) * (((maxR-r))+1);
-                      p.velocity.z = (z == 0) ? 0 :  (z > 0 ? explosionPower : -explosionPower) * (((maxR-r))+1);
-                    }
-                  }
-              }
+    for (var y = -r; y < r; y++) {
+      for (var x = -r; x <= r; x++) {
+        for (var z = -r; z <= r; z++) {
+          if (x * x / w2 + y * y / h2 + z * z / d2 < 1) {
+            if ((blockData[world.getBlock(X + x, Y + y, Z + z)].explodable && blockData[world.getBlock(X + x, Y + y, Z + z)].blastResistance <= 0.1 * maxR / euclideanDistance(X + x, X, Y + y, Y, Z + z, Z) * (1+explosionPower))) {
+              world.setBlock(X + x, Y + y, Z + z, blockIds.air);
+            }
+            if (X + x == Math.round(p.x) && Y + y == Math.round(p.y) && Z + z == Math.round(p.z)) {
+              p.velocity.x = (x == 0) ? 0 : (x > 0 ? explosionPower : -explosionPower) * (((maxR-r))+1);
+              p.velocity.y = (y == 0) ? 0 :  (y > 0 ? explosionPower : -explosionPower) * (((maxR-r))+1);
+              p.velocity.z = (z == 0) ? 0 :  (z > 0 ? explosionPower : -explosionPower) * (((maxR-r))+1);
+            }
           }
+        }
       }
+    }
   }
   /*
     Enable tnt to explode at coordinates x, y, z with radius of explosion r
   */
   function explode(x, y, z, r, explosionPower) {
-    world.setBlock(x,y,z,blockIds.air);
+    world.setBlock(x,y,z, blockIds.air);
     for (var i = r; i > 0; i--) {
       sphere(x, y, z, i, r, explosionPower);
     }
@@ -1315,6 +1420,7 @@ var init = delag(function() {
         data.flatIcon = true;
       }
       data.explodable = data.explodable === undefined ? true : data.explodable;
+      data.blastResistance = data.blastResistance === undefined ? 0.27 : data.blastResistance;
       data.shadow = data.shadow !== undefined ? data.shadow : true;
       data.dtexture = data.dtexture !== undefined ? [data.dtexture, data.dtexture, data.dtexture, data.dtexture, data.dtexture, data.dtexture] : data.textures;
 
@@ -2554,7 +2660,7 @@ var init = delag(function() {
       {
         riddle: "green and expensive",
         answers: [blockIds.emeraldOre, blockIds.deepslateEmeraldOre, blockIds.emeraldBlock],
-        score: 6
+        score: 10
       },
       {
         riddle: "black when you find me, red when you use me, gray when you throw me away",
@@ -2569,7 +2675,7 @@ var init = delag(function() {
       {
         riddle: "don't fall on me!",
         answers: [blockIds.dripstoneUp],
-        score: 3
+        score: 5
       },
       {
         riddle: "expensive and high maintenance, but very pretty",
@@ -2608,7 +2714,7 @@ var init = delag(function() {
       },
       {
         riddle: "I guess it's october...",
-        answers: [blockIds.pumkin],
+        answers: [blockIds.pumpkin],
         score: 2
       },
       {
@@ -2644,7 +2750,7 @@ var init = delag(function() {
       {
         riddle: "find me only in the highest places",
         answers: [blockIds.snow],
-        score: 2
+        score: 3
       },
       {
         riddle: "you're holding me right now",
@@ -5518,7 +5624,7 @@ var init = delag(function() {
 
     ctx.strokeRect(width / 2 - 9 / 2 * s + inventory.hotbarSlot * s + 25, height - s * 1.5, s, s);
 
-    var str =  "FPS: " + analytics.fps + "\n" + "Seed: " + worldSeed + "\n" + "Game mode: " + gamemodes[gamemode].name + "\n"
+    var str =  "FPS: " + analytics.fps + "\n" + "Seed: " + worldSeed + "\n" + "Game Mode: " + gamemodes[gamemode].name + "\n"
     + "Rendered Chunks: " + renderedChunks.toLocaleString() + "/" + world.loaded.length + "\n"
     + "Generated Chunks: " + generatedChunks.toLocaleString();
 
@@ -5815,6 +5921,10 @@ var init = delag(function() {
         freezeFrame = true;
       }
 
+      if (k === "r" && gamemodes[gamemode].name == "Block Hunt") {
+        newRiddle();
+      }
+
       if (Number(k)) {
         inventory.hotbarSlot = Number(k) - 1;
         holding = inventory.hotbar[inventory.hotbarSlot];
@@ -6026,7 +6136,7 @@ var init = delag(function() {
           textSize(12);
           ctx.textAlign = 'right';
           ctx.fillStyle = "white";
-          text("v1.1.0", width - 10, height - 10);
+          text("v1.2.0", width - 10, height - 10);
         }
       }
       else if (screen === "play") {
