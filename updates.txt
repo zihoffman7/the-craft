@@ -1,3 +1,53 @@
+v1.3.0 - 3/13/22
+----------------------
+New world modes!
+----------------------
++ Moved superflat to a world mode instead of game mode
++ New amplified and nether mode
+  * Amplified is overworld with more jagged terrain
+  * Nether
+    - New biomes
+      + Deltas
+      + Valley
+      + Brinks
+      + Wasteland
+      + Pile
+    - Ancient Debris, gilded debris, nether quartz, and nether gold ore now spawn
+  * Nether temples now spawn, along with ruined portals
+  * Mushrooms spawn on netherrack, wither roses spawn on soul sand
++ Rearranged menus
+  * Added create world screen
+  * Link to update log on main menu
++ Added more riddles to block hunt
+
+v1.2.2 - 3/10/22
+----------------------
+Seed and save adjustments
+----------------------
++ Deprecated game saves
++ Now, can load worlds on custom seeds
+  * Can load numbers as seeds or text
+    - Text seeds are parsed from base36
++ Press 'x' to see block looking at
+
+
+v1.2.1 - 3/10/22
+----------------------
+Slight terrain, cave, and structure changes
+----------------------
++ Increased rarity of gilded debris
++ Lowered snow to spawn as low as y89
++ Prevented melons from spawning into trees
++ Increased rarity of jungle temples, decreased rarity of non-jungle temples
+  * Now jungle temples are only 4 times more likely to spawn than other temples instead of 9
+  * Greatly decreased rarity of mountain temples
++ Increased rarity of ruins
++ Added new rare fire wells
++ Added geodes
+  * Spawns between y8 and y24
++ Finally centered the inventory screen
+
+
 v1.2.0 - 3/8/22
 ----------------------
 The explosion update
