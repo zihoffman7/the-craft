@@ -1,3 +1,45 @@
+v1.4.0 - 7/27/22
+----------------------
+Major overworld update!
+----------------------
++ Added new taiga, flower forest, and tall mountain biomes!
++ Added new "edge" biomes to smoothen generation
++ Rebalanced structure and biome generation odds
++ Changed build limit to 150 blocks
++ Changed default render distance to 8 chunks, max render distance to 24
++ Removed amplified gamemode
++ Lowered snow level to y87
++ Removed luckyblock
++ Added effect block, can get Speed 1-3, Jump Boost 1-2
++ Added boring moon world
++ Added ice caps to mountains above y93
+
+
+v1.3.3 - 6/9/22
+----------------------
+Bug fixes, balance changes
+----------------------
++ Rebalanced blocks' blast radii
++ Patched flawed lucky block randomness
++ Disabled lucky block cactii from going over new height limit
++ Modified default daynightcycle parameter
++ Fixed worldgen bug when user doesn't reload
++ Improved alignment of render distance (+) and (-) buttons
++ Added new stone worldmode
+
+
+v1.3.2 - 3/30/22
+----------------------
+Bug fixes, balance changes
+----------------------
++ Adjusted fossil spawning in nether
++ Increased rarity of gold block nether structures
++ Added some new outcomes to lucky blocks
++ Increased geode spawn rate
++ Adjusted blast radii of nether blocks
++ Changed build limit to 160 blocks
+
+
 v1.3.1 - 3/16/22
 ----------------------
 New nether biomes, bug fixes
@@ -5,6 +47,7 @@ New nether biomes, bug fixes
 + Crimson and warped biomes in nether
 + No cave fog in nether
 + Fossils now spawn in valleys
+
 
 v1.3.0 - 3/13/22
 ----------------------
