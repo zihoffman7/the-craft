@@ -1558,7 +1558,7 @@ var init = delag(function () {
 			shadow: false,
 			liquid: true,
 			solid: false,
-			slide: 0.01,
+			slide: 0.008,
 			onload: function (x, y, z) {
 				if (blockData[world.getBlock(x, y - 1, z)].liquid) {
 					return;
