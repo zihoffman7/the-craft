@@ -1,18 +1,28 @@
-v1.4.0 - 7/27/22
+v2.0.0 - 7/29/22
 ----------------------
-Major overworld update!
+Major terrain update, physics changes
 ----------------------
-+ Added new taiga, flower forest, and tall mountain biomes!
++ Added ore hunt game mode
++ Liquids now flow
++ Added new taiga, flower forest, and tall mountain biomes
++ Natural spawning lava lakes at y3 in caves
++ Added effect block, can get Speed 1-3, Jump Boost 1-2
 + Added new "edge" biomes to smoothen generation
++ Added ice caps to mountains above y93
++ Changed snow to be a block, spawns on mountains at y87
++ Sand and gravel now falls
++ New dark leaves and dark grass blocks
++ Cactuses and sugar cane now break if no or wrong block under them, cane needs water too
 + Rebalanced structure and biome generation odds
 + Changed build limit to 150 blocks
 + Changed default render distance to 8 chunks, max render distance to 24
 + Removed amplified gamemode
-+ Lowered snow level to y87
 + Removed luckyblock
-+ Added effect block, can get Speed 1-3, Jump Boost 1-2
-+ Added boring moon world
-+ Added ice caps to mountains above y93
++ Added moon world with low gravity
++ berry bushes don't spawn in jungles anymore, only in taiga
++ Added tints to screen when inside water or lava
++ Patched slime/honey bounce glitches
++ Beautified JS https://www.prettifyjs.net/
 
 
 v1.3.3 - 6/9/22

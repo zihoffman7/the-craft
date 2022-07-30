@@ -4,6 +4,10 @@
   <head>
     <meta charset="utf-8">
     <title>website</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
     <script type="x-shader/vertex" id="vertexShader">
       #ifdef GL_FRAGMENT_PRECISION_HIGH
         precision highp float;
@@ -17,6 +21,8 @@
       uniform float uTime;
       uniform float uDist;
       uniform bool lightDepthChange;
+      uniform bool inWater;
+      uniform bool inLava;
       uniform vec3 uPos;
       varying vec2 vTexture;
       varying float vFog;
@@ -26,7 +32,7 @@
         if (color.a != 1.0) {
           color.a = mix(color.a, 0.0, vFog);
         }
-        color = vec4(mix(color.rgb * vShadow / 16.0, skyColor, vFog), color.a);
+        color = vec4(mix(color.rgb * vShadow / 16.0, skyColor, vFog), color.a) * (inWater ? vec4(0.6, 0.6, 3, 1.5) : (inLava ? vec4(3, 1.0, 1.0, 4) : vec4(1.0, 1.0, 1.0, 1.0)));
         gl_FragColor = color;
         if (gl_FragColor.a == 0.0) {
           discard;
@@ -51,6 +57,8 @@
       uniform vec3 uPos;
       varying float vFog;
       uniform vec3 skyColor;
+      uniform bool inWater;
+      uniform bool inLava;
       float dUp = (lightDepthChange ? ((uPos.y < 90.0) ? 0.0 : (uPos.y - 90.0) / 200.0) : 0.0);
       float unDist;
 
@@ -64,13 +72,11 @@
       }
     </script>
   </head>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="style.css">
   <body>
-    <canvas id="overlay" width="200" height="200"></canvas>
+    <!-- deprecated -->
     <input type="textbox" id="save-code" hidden="true">
+
+    <canvas id="overlay" width="200" height="200"></canvas>
     <script src="script.js"></script>
   </body>
 </html>
