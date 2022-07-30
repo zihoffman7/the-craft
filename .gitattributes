@@ -1,3 +1,4 @@
 audio/* linguist-vendored
 *.* linguist-documentation=false
+game.js linguist-language=JS
 
