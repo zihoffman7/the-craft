@@ -23,6 +23,9 @@ Major terrain update, physics changes
 + Added tints to screen when inside water or lava
 + Patched slime/honey bounce glitches
 + Beautified JS https://www.prettifyjs.net/
++ Raised lapis level to y36
++ Largened, smoothened biomes
++ Decreased structure odds 
 
 
 v1.3.3 - 6/9/22
