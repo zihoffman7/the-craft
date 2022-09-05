@@ -32,7 +32,7 @@
         if (color.a != 1.0) {
           color.a = mix(color.a, 0.0, vFog);
         }
-        color = vec4(mix(color.rgb * vShadow / 16.0, skyColor, vFog), color.a) * (inWater ? vec4(0.6, 0.6, 3, 1.5) : (inLava ? vec4(3, 1.0, 1.0, 4) : vec4(1.0, 1.0, 1.0, 1.0)));
+        color = (vec4(mix(color.rgb * vShadow / 16.0, skyColor, vFog), color.a)) * (inWater ? vec4(0.6, 0.6, 3, 1.5) : (inLava ? vec4(3.0, 1.0, 1.0, 4.0) : vec4(1.0, 1.0, 1.0, 1.0)));
         gl_FragColor = color;
         if (gl_FragColor.a == 0.0) {
           discard;
@@ -63,10 +63,10 @@
       float unDist;
 
       void main(void) {
-        unDist = uDist;
+        unDist = (inWater || inLava ? uDist/5.0 : uDist);
         vTexture = aTexture;
         vShadow = (uTime + 1.0) * aShadow * max(aBlocklight / 16.0, min(aSkylight / 16.0 * uTime * 0.9 + 0.1, 1.0));
-        float range = max(unDist / 5.0, 2.0);
+        float range = max((inLava || inWater ? unDist / 1.2 : unDist / 5.0), (inLava || inWater ? 10.0 : 2.0));
         vFog = clamp((length(uPos.xz - aVertex.xz) - unDist + range) / range, dUp, 1.0);
         gl_Position = uView * vec4(aVertex, 1.0);
       }

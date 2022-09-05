@@ -524,7 +524,7 @@ var init = delag(function () {
 			var pix = getPixels("0g0g819okofo1bwspmc1hhcsl01ktoud01lxsuyc1n1wvjo1x2x0vo1y711h02111000111112435000011111100000011000000112221001000122111221111001110000100011100101121112110002111111111114472434111211111112277424742121221140000000000000100100001000112111100000000000000010000000000010000100001111122101000000001127732101211466211211111")
 			for (var i = 0; i < pix.length; i += 4) {
 				var bright = pix[i] / 255
-				setPixel(n, i >> 2 & 15, i >> 6, bright * 30, bright * 50, bright * 255, 250);
+				setPixel(n, i >> 2 & 15, i >> 6, bright * 30, bright * 50, bright * 255, 255);
 			}
 		},
 		lava: "0g0gp1jjxhbz1jjxi4f1jk33lr1knvuv31ko1hxb1lsrytb1lsrzlr1mwqd4v1o1mhvj1o1minz1p5kven1p5kw731p67ev31p6io731qa5se71qabfgf1qaxxbz1qaxy4f1rewbnj1sjmuwv1sjmvpb1to7sov1ut3zsv1ut9m2n1y687b3965ckke60666999cf996f8c66cd69fjddd96606669f67hold967629c96669lll966666dhc9969jfh97666chh69df699c96999kk969kd69f99696dlnf069536669ha66fh960066456hhk97690017ll66chgl96000009ml5696969hg63066862666666kl7066c60068li69990669d6609knldh66046699hb6hefckh960656fhd69",
@@ -746,10 +746,12 @@ var init = delag(function () {
 			name: "bricks"
 		},
 		{
-			name: "smoothBasalt"
+			name: "smoothBasalt",
+			blastResistance: 0.3,
 		},
 		{
-			name: "tuff"
+			name: "tuff",
+			blastResistance: 0.3,
 		},
 		{
 			name: "calcite"
@@ -761,49 +763,57 @@ var init = delag(function () {
 			name: "coalOre"
 		},
 		{
-			name: "deepslateCoalOre"
+			name: "deepslateCoalOre",
+			blastResistance: 0.3,
 		},
 		{
 			name: "copperOre"
 		},
 		{
-			name: "deepslateCopperOre"
+			name: "deepslateCopperOre",
+			blastResistance: 0.3,
 		},
 		{
 			name: "ironOre"
 		},
 		{
-			name: "deepslateIronOre"
+			name: "deepslateIronOre",
+			blastResistance: 0.3,
 		},
 		{
 			name: "goldOre"
 		},
 		{
-			name: "deepslateGoldOre"
+			name: "deepslateGoldOre",
+			blastResistance: 0.3,
 		},
 		{
 			name: "redstoneOre"
 		},
 		{
-			name: "deepslateRedstoneOre"
+			name: "deepslateRedstoneOre",
+			blastResistance: 0.3,
 		},
 		{
 			name: "lapisOre"
 		},
 		{
-			name: "deepslateLapisOre"
+			name: "deepslateLapisOre",
+			blastResistance: 0.3,
 		},
 		{
 			name: "emeraldOre"
 		},
 		{
-			name: "deepslateEmeraldOre"
+			name: "deepslateEmeraldOre",
+			blastResistance: 0.3,
 		},
 		{
 			name: "diamondOre"
 		},
 		{
-			name: "deepslateDiamondOre"
+			name: "deepslateDiamondOre",
+			blastResistance: 0.3,
 		},
 		{
 			name: "ancientDebris",
@@ -1292,7 +1302,7 @@ var init = delag(function () {
 				}, 3000);
 				setTimeout(function () {
 					if (blockData[world.getBlock(x, y, z)].name == "nuke") {
-						explode(x, y, z, (blockData[world.getBlock(x + 1, y, z)].name == "witherRose" && blockData[world.getBlock(x - 1, y, z)].name == "witherRose" && blockData[world.getBlock(x, y, z + 1)].name == "witherRose" && blockData[world.getBlock(x, y, z - 1)].name == "witherRose" ? (blockData[world.getBlock(x, y - 1, z)].name == "redstoneBlock" ? 99 : 69) : 32), 0.05);
+						explode(x, y, z, (blockData[world.getBlock(x + 1, y, z)].name == "witherRose" && blockData[world.getBlock(x - 1, y, z)].name == "witherRose" && blockData[world.getBlock(x, y, z + 1)].name == "witherRose" && blockData[world.getBlock(x, y, z - 1)].name == "witherRose" ? (blockData[world.getBlock(x, y - 1, z)].name == "redstoneBlock" ? 99 : 69) : (blockData[world.getBlock(x, y - 1, z)].name == "lapisBlock" ? parseInt(prompt("Enter radius (be cautious, may kill your computer if it's larger than 100)")) || 32 : 32)), 0.05);
 					} else {
 						s.stop()
 					}
@@ -1508,7 +1518,7 @@ var init = delag(function () {
 		},
 		{
 			name: "water",
-			transparent: true,
+			transparent: false,
 			shadow: false,
 			liquid: true,
 			solid: false,
@@ -1559,7 +1569,7 @@ var init = delag(function () {
 			shadow: false,
 			liquid: true,
 			solid: false,
-			slide: 0.008,
+			slide: 0.0008,
       explodable: false,
 			onload: function (x, y, z) {
 				if (blockData[world.getBlock(x, y - 1, z)].liquid) {
@@ -1661,7 +1671,22 @@ var init = delag(function () {
 			transparent: true,
 			shadow: false,
 			crossShape: true,
-			blastResistance: 0.05
+			blastResistance: 0.05,
+      onload: function (x, y, z) {
+				if (blockData[world.getBlock(x, y - 1, z)].name != "grassBlock" && blockData[world.getBlock(x, y - 1, z)].name != "lightGrassBlock" && blockData[world.getBlock(x, y - 1, z)].name != "darkGrassBlock") {
+          if (world.getBlock(x, y - 1, z) && !blockData[world.getBlock(x, y - 1, z)].crossShape && !blockData[world.getBlock(x, y - 1, z)].liquid) {
+            setTimeout(function () {
+  						explode(x, y, z, 0);
+              world.setBlock(x, y, z, blockIds.witherRose)
+  					}, 1200)
+          }
+          else {
+            setTimeout(function () {
+  						explode(x, y, z, 0);
+  					}, 100)
+          }
+				}
+			}
 		},
 		{
 			name: "dandelion",
@@ -1669,7 +1694,14 @@ var init = delag(function () {
 			transparent: true,
 			shadow: false,
 			crossShape: true,
-			blastResistance: 0.05
+			blastResistance: 0.05,
+      onload: function (x, y, z) {
+				if (blockData[world.getBlock(x, y - 1, z)].name != "grassBlock" && blockData[world.getBlock(x, y - 1, z)].name != "lightGrassBlock" && blockData[world.getBlock(x, y - 1, z)].name != "darkGrassBlock") {
+					setTimeout(function () {
+						explode(x, y, z, 0);
+					}, 100)
+				}
+			}
 		},
 		{
 			name: "blueOrchid",
@@ -1677,7 +1709,14 @@ var init = delag(function () {
 			transparent: true,
 			shadow: false,
 			crossShape: true,
-			blastResistance: 0.05
+			blastResistance: 0.05,
+      onload: function (x, y, z) {
+				if (blockData[world.getBlock(x, y - 1, z)].name != "grassBlock" && blockData[world.getBlock(x, y - 1, z)].name != "lightGrassBlock" && blockData[world.getBlock(x, y - 1, z)].name != "darkGrassBlock") {
+					setTimeout(function () {
+						explode(x, y, z, 0);
+					}, 100)
+				}
+			}
 		},
 		{
 			name: "pinkTulip",
@@ -1685,7 +1724,14 @@ var init = delag(function () {
 			transparent: true,
 			shadow: false,
 			crossShape: true,
-			blastResistance: 0.05
+			blastResistance: 0.05,
+      onload: function (x, y, z) {
+				if (blockData[world.getBlock(x, y - 1, z)].name != "grassBlock" && blockData[world.getBlock(x, y - 1, z)].name != "lightGrassBlock" && blockData[world.getBlock(x, y - 1, z)].name != "darkGrassBlock") {
+					setTimeout(function () {
+						explode(x, y, z, 0);
+					}, 100)
+				}
+			}
 		},
 		{
 			name: "orangeTulip",
@@ -1693,7 +1739,14 @@ var init = delag(function () {
 			transparent: true,
 			shadow: false,
 			crossShape: true,
-			blastResistance: 0.05
+			blastResistance: 0.05,
+      onload: function (x, y, z) {
+				if (blockData[world.getBlock(x, y - 1, z)].name != "grassBlock" && blockData[world.getBlock(x, y - 1, z)].name != "lightGrassBlock" && blockData[world.getBlock(x, y - 1, z)].name != "darkGrassBlock") {
+					setTimeout(function () {
+						explode(x, y, z, 0);
+					}, 100)
+				}
+			}
 		},
 		{
 			name: "redTulip",
@@ -1701,7 +1754,14 @@ var init = delag(function () {
 			transparent: true,
 			shadow: false,
 			crossShape: true,
-			blastResistance: 0.05
+			blastResistance: 0.05,
+      onload: function (x, y, z) {
+				if (blockData[world.getBlock(x, y - 1, z)].name != "grassBlock" && blockData[world.getBlock(x, y - 1, z)].name != "lightGrassBlock" && blockData[world.getBlock(x, y - 1, z)].name != "darkGrassBlock") {
+					setTimeout(function () {
+						explode(x, y, z, 0);
+					}, 100)
+				}
+			}
 		},
 		{
 			name: "whiteTulip",
@@ -1709,7 +1769,14 @@ var init = delag(function () {
 			transparent: true,
 			shadow: false,
 			crossShape: true,
-			blastResistance: 0.05
+			blastResistance: 0.05,
+      onload: function (x, y, z) {
+				if (blockData[world.getBlock(x, y - 1, z)].name != "grassBlock" && blockData[world.getBlock(x, y - 1, z)].name != "lightGrassBlock" && blockData[world.getBlock(x, y - 1, z)].name != "darkGrassBlock") {
+					setTimeout(function () {
+						explode(x, y, z, 0);
+					}, 100)
+				}
+			}
 		},
 		{
 			name: "azureBluet",
@@ -1717,7 +1784,14 @@ var init = delag(function () {
 			transparent: true,
 			shadow: false,
 			crossShape: true,
-			blastResistance: 0.05
+			blastResistance: 0.05,
+      onload: function (x, y, z) {
+				if (blockData[world.getBlock(x, y - 1, z)].name != "grassBlock" && blockData[world.getBlock(x, y - 1, z)].name != "lightGrassBlock" && blockData[world.getBlock(x, y - 1, z)].name != "darkGrassBlock") {
+					setTimeout(function () {
+						explode(x, y, z, 0);
+					}, 100)
+				}
+			}
 		},
 		{
 			name: "cornFlower",
@@ -1725,7 +1799,14 @@ var init = delag(function () {
 			transparent: true,
 			shadow: false,
 			crossShape: true,
-			blastResistance: 0.05
+			blastResistance: 0.05,
+      onload: function (x, y, z) {
+				if (blockData[world.getBlock(x, y - 1, z)].name != "grassBlock" && blockData[world.getBlock(x, y - 1, z)].name != "lightGrassBlock" && blockData[world.getBlock(x, y - 1, z)].name != "darkGrassBlock") {
+					setTimeout(function () {
+						explode(x, y, z, 0);
+					}, 100)
+				}
+			}
 		},
 		{
 			name: "oxeyeDaisy",
@@ -1733,7 +1814,14 @@ var init = delag(function () {
 			transparent: true,
 			shadow: false,
 			crossShape: true,
-			blastResistance: 0.05
+			blastResistance: 0.05,
+      onload: function (x, y, z) {
+				if (blockData[world.getBlock(x, y - 1, z)].name != "grassBlock" && blockData[world.getBlock(x, y - 1, z)].name != "lightGrassBlock" && blockData[world.getBlock(x, y - 1, z)].name != "darkGrassBlock") {
+					setTimeout(function () {
+						explode(x, y, z, 0);
+					}, 100)
+				}
+			}
 		},
 		{
 			name: "allium",
@@ -1741,7 +1829,14 @@ var init = delag(function () {
 			transparent: true,
 			shadow: false,
 			crossShape: true,
-			blastResistance: 0.05
+			blastResistance: 0.05,
+      onload: function (x, y, z) {
+				if (blockData[world.getBlock(x, y - 1, z)].name != "grassBlock" && blockData[world.getBlock(x, y - 1, z)].name != "lightGrassBlock" && blockData[world.getBlock(x, y - 1, z)].name != "darkGrassBlock") {
+					setTimeout(function () {
+						explode(x, y, z, 0);
+					}, 100)
+				}
+			}
 		},
 		{
 			name: "sugarCane",
@@ -1777,7 +1872,14 @@ var init = delag(function () {
 			transparent: true,
 			shadow: false,
 			crossShape: true,
-			blastResistance: 0.1
+			blastResistance: 0.1,
+      onload: function (x, y, z) {
+				if (blockData[world.getBlock(x, y - 1, z)].name != "grassBlock" && blockData[world.getBlock(x, y - 1, z)].name != "lightGrassBlock" && blockData[world.getBlock(x, y - 1, z)].name != "darkGrassBlock") {
+					setTimeout(function () {
+						explode(x, y, z, 0);
+					}, 100)
+				}
+			}
 		},
 		{
 			name: "fern",
@@ -1785,7 +1887,22 @@ var init = delag(function () {
 			transparent: true,
 			shadow: false,
 			crossShape: true,
-			blastResistance: 0.08
+			blastResistance: 0.08,
+      onload: function (x, y, z) {
+				if (blockData[world.getBlock(x, y - 1, z)].name != "grassBlock" && blockData[world.getBlock(x, y - 1, z)].name != "lightGrassBlock" && blockData[world.getBlock(x, y - 1, z)].name != "darkGrassBlock") {
+          if (world.getBlock(x, y - 1, z) && !blockData[world.getBlock(x, y - 1, z)].crossShape && !blockData[world.getBlock(x, y - 1, z)].liquid) {
+            setTimeout(function () {
+  						explode(x, y, z, 0);
+              world.setBlock(x, y, z, blockIds.deadBush)
+  					}, 1200)
+          }
+          else {
+            setTimeout(function () {
+  						explode(x, y, z, 0);
+  					}, 100)
+          }
+				}
+			}
 		},
 		{
 			name: "witherRose",
@@ -1794,7 +1911,14 @@ var init = delag(function () {
 			shadow: false,
 			crossShape: true,
 			slide: 0.05,
-			blastResistance: 0.16
+			blastResistance: 0.16,
+      onload: function (x, y, z) {
+				if (!world.getBlock(x, y - 1, z) || blockData[world.getBlock(x, y - 1, z)].crossShape || blockData[world.getBlock(x, y - 1, z)].liquid) {
+					setTimeout(function () {
+						explode(x, y, z, 0);
+					}, 100)
+				}
+			}
 		},
 		{
 			name: "deadBush",
@@ -1802,7 +1926,14 @@ var init = delag(function () {
 			transparent: true,
 			shadow: false,
 			crossShape: true,
-			blastResistance: 0.08
+			blastResistance: 0.08,
+      onload: function (x, y, z) {
+				if (!world.getBlock(x, y - 1, z) || blockData[world.getBlock(x, y - 1, z)].crossShape || blockData[world.getBlock(x, y - 1, z)].liquid) {
+					setTimeout(function () {
+						explode(x, y, z, 0);
+					}, 100)
+				}
+			}
 		},
 		{
 			name: "hangingRoots",
@@ -1818,7 +1949,14 @@ var init = delag(function () {
 			transparent: true,
 			shadow: false,
 			crossShape: true,
-			blastResistance: 0.1
+			blastResistance: 0.1,
+      onload: function (x, y, z) {
+				if (!world.getBlock(x, y - 1, z) || blockData[world.getBlock(x, y - 1, z)].crossShape || blockData[world.getBlock(x, y - 1, z)].liquid) {
+					setTimeout(function () {
+						explode(x, y, z, 0);
+					}, 100)
+				}
+			}
 		},
 		{
 			name: "brownMushroom",
@@ -1826,7 +1964,14 @@ var init = delag(function () {
 			transparent: true,
 			shadow: false,
 			crossShape: true,
-			blastResistance: 0.1
+			blastResistance: 0.1,
+      onload: function (x, y, z) {
+				if (!world.getBlock(x, y - 1, z) || blockData[world.getBlock(x, y - 1, z)].crossShape || blockData[world.getBlock(x, y - 1, z)].liquid) {
+					setTimeout(function () {
+						explode(x, y, z, 0);
+					}, 100)
+				}
+			}
 		},
 		{
 			name: "crimsonFungus",
@@ -1834,7 +1979,14 @@ var init = delag(function () {
 			transparent: true,
 			shadow: false,
 			crossShape: true,
-			blastResistance: 0.2
+			blastResistance: 0.2,
+      onload: function (x, y, z) {
+				if (!world.getBlock(x, y - 1, z) || blockData[world.getBlock(x, y - 1, z)].crossShape || blockData[world.getBlock(x, y - 1, z)].liquid) {
+					setTimeout(function () {
+						explode(x, y, z, 0);
+					}, 100)
+				}
+			}
 		},
 		{
 			name: "warpedFungus",
@@ -1842,7 +1994,14 @@ var init = delag(function () {
 			transparent: true,
 			shadow: false,
 			crossShape: true,
-			blastResistance: 0.2
+			blastResistance: 0.2,
+      onload: function (x, y, z) {
+				if (!world.getBlock(x, y - 1, z) || blockData[world.getBlock(x, y - 1, z)].crossShape || blockData[world.getBlock(x, y - 1, z)].liquid) {
+					setTimeout(function () {
+						explode(x, y, z, 0);
+					}, 100)
+				}
+			}
 		},
 		{
 			name: "crimsonRoots",
@@ -1850,7 +2009,14 @@ var init = delag(function () {
 			transparent: true,
 			shadow: false,
 			crossShape: true,
-			blastResistance: 0.16
+			blastResistance: 0.16,
+      onload: function (x, y, z) {
+				if (!world.getBlock(x, y - 1, z) || blockData[world.getBlock(x, y - 1, z)].crossShape || blockData[world.getBlock(x, y - 1, z)].liquid) {
+					setTimeout(function () {
+						explode(x, y, z, 0);
+					}, 100)
+				}
+			}
 		},
 		{
 			name: "warpedRoots",
@@ -1858,7 +2024,14 @@ var init = delag(function () {
 			transparent: true,
 			shadow: false,
 			crossShape: true,
-			blastResistance: 0.16
+			blastResistance: 0.16,
+      onload: function (x, y, z) {
+				if (!world.getBlock(x, y - 1, z) || blockData[world.getBlock(x, y - 1, z)].crossShape || blockData[world.getBlock(x, y - 1, z)].liquid) {
+					setTimeout(function () {
+						explode(x, y, z, 0);
+					}, 100)
+				}
+			}
 		},
 		{
 			name: "crimsonVines",
@@ -1936,6 +2109,14 @@ var init = delag(function () {
 		},
 	];
 
+  function inLiquid(x, y, z) {
+    return blockData[world.getBlock(Math.round(x), Math.round(y), Math.round(z))].name == "water" || blockData[world.getBlock(Math.round(x), Math.round(y-1), Math.round(z))].name == "water" || blockData[world.getBlock(Math.round(x), Math.round(y), Math.round(z))].name == "lava" || blockData[world.getBlock(Math.round(x), Math.round(y-1), Math.round(z))].name == "lava"
+  }
+
+  function canClimb(x, y, z) {
+    return blockData[world.getBlock(Math.round(x), Math.round(y), Math.round(z))].name == "caveVinesBodyLit" || blockData[world.getBlock(Math.round(x), Math.round(y), Math.round(z))].name == "caveVinesLit" || blockData[world.getBlock(Math.round(x), Math.round(y), Math.round(z))].name == "crimsonVines" || blockData[world.getBlock(Math.round(x), Math.round(y), Math.round(z))].name == "warpedVines";
+  }
+
 	/*
 	  Create sphere at x, y, z with width w, height h, depth d
 	  explosionPower determines if block is deleted due to corresponding blast resistance
@@ -1992,6 +2173,9 @@ var init = delag(function () {
 					for (var x = -r; x <= r; x++) {
 						for (var z = -r; z <= r; z++) {
 							if (x * x / w2 + y * y / h2 + z * z / d2 < 1) {
+                if (block) {
+                  explode(X + x, Y + y, Z + z, 0)
+                }
 								world.setBlock(X + x, Y + y, Z + z, block);
 							}
 						}
@@ -3479,7 +3663,7 @@ var init = delag(function () {
 
 
 
-		if (p.onGround) {
+		if (p.onGround && !inLiquid(p.x, p.y, p.z) && !canClimb(p.x, p.y, p.z)) {
 			if (Key[" "]) {
 				p.velocity.y = p.jumpSpeed;
 				p.onGround = false;
@@ -3487,7 +3671,18 @@ var init = delag(function () {
 				p.velocity.y = 0;
 			}
 		} else {
-			p.velocity.y += p.gravityStrength * dt;
+      if (inLiquid(p.x, p.y, p.z) && !Key[" "]) {
+        p.velocity.y = -0.06
+      } else if (canClimb(p.x, p.y, p.z) && !Key[" "]) {
+        if (Key.shift) {
+          p.velocity.y = 0;
+        } else {
+          p.velocity.y = -0.04
+        }
+      } else {
+        p.velocity.y += p.gravityStrength * dt;
+      }
+
 			if (p.velocity.y < -p.maxYVelocity) {
 				p.velocity.y = -p.maxYVelocity;
 			}
@@ -3539,7 +3734,7 @@ var init = delag(function () {
 		riddles: [{
 				riddle: "the best conductor",
 				answers: [blockIds.copperOre, blockIds.copperBlock, blockIds.deepslateCopperOre],
-				score: 2
+				score: 4
 			},
 			{
 				riddle: "don't hug me!",
@@ -3554,17 +3749,17 @@ var init = delag(function () {
 			{
 				riddle: "nobody knows I exist",
 				answers: [blockIds.hangingRoots],
-				score: 16
+				score: 24
 			},
 			{
 				riddle: "don't give me to your girlfriend!",
 				answers: [blockIds.deadBush],
-				score: 3
+				score: 4
 			},
 			{
 				riddle: "the worst holiday gift",
 				answers: [blockIds.coalOre, blockIds.deepslateCoalOre, blockIds.coalBlock],
-				score: 1
+				score: 3
 			},
 			{
 				riddle: "don't anger the queen!",
@@ -3579,7 +3774,7 @@ var init = delag(function () {
 			{
 				riddle: "black when you find me, red when you use me, gray when you throw me away",
 				answers: [blockIds.coalOre, blockIds.deepslateCoalOre, blockIds.coalBlock],
-				score: 3
+				score: 4
 			},
 			{
 				riddle: "shiny and pointy",
@@ -3624,7 +3819,7 @@ var init = delag(function () {
 			{
 				riddle: "the oldest mystery",
 				answers: [blockIds.ancientDebris, blockIds.gildedDebris],
-				score: 16
+				score: 20
 			},
 			{
 				riddle: "cool magma",
@@ -3644,7 +3839,7 @@ var init = delag(function () {
 			{
 				riddle: "The rarest mineral",
 				answers: [blockIds.gildedDebris],
-				score: 24
+				score: 42
 			},
 			{
 				riddle: "I'm dying but still alive",
@@ -3674,7 +3869,7 @@ var init = delag(function () {
 			{
 				riddle: "scalding hot",
 				answers: [blockIds.magma, blockIds.lava],
-				score: 1
+				score: 2
 			},
 			{
 				riddle: "don't eat me in the wild!",
@@ -4485,6 +4680,15 @@ var init = delag(function () {
 		}
 	}
 
+	function getBigStruct(x, z, biome) {
+		if (worldmodes[worldmode].name == "Normal") {
+			if (noise(x * 0.0029, z * 0.0029) > 0.49 && noise(x * 0.0029, z * 0.0029) < 0.57 && getBiome(x,z,biome) == "plains") {
+				return "village"
+			}
+		}
+		return false;
+	}
+
 	function choice(l) {
 		try {
 			return l[Math.floor(random() * l.length)];
@@ -4607,6 +4811,12 @@ var init = delag(function () {
 		}
 	};
 
+	Chunk.prototype.spawnPillar3 = function (i, grd, j, k, b) {
+		for (var g = grd; g <= j; g++) {
+			this.setBlock(i, g, k, choice(b));
+		}
+	};
+
 	Chunk.prototype.setBlock2 = function (x, z, y, biome, b) {
 		this.setBlock(x, y, z, b || blockIds.calcite);
 	};
@@ -4636,6 +4846,7 @@ var init = delag(function () {
 		for (var i = 0; i < 16; i++) {
 			for (var k = 0; k < 16; k++) {
 				var biome = getBiome(this.x + i, this.z + k, noise((this.x + i) * generator.biomeSmooth, (this.z + k) * generator.biomeSmooth));
+				var struct = getBigStruct(this.x + i, this.z + k, noise((this.x + i) * generator.biomeSmooth, (this.z + k) * generator.biomeSmooth))
 				var caveSmooth = generator.biome[biome].caveSmooth;
 				var caveFreq = generator.biome[biome].caveFrequency;
 
@@ -4668,10 +4879,9 @@ var init = delag(function () {
 						}
 					}
 				}
-
 				if (biome == "forest" || biome == "flower_forest") {
 					var gg = Math.round(noise((wx + i) * generator.biome[biome].smooth, (wz + k) * generator.biome[biome].smooth) * generator.biome[biome].height) + generator.biome[biome].extra;
-					if (random() < 0.0008 && world.getBlock(wx + i, gg, wz + k) != 0 && world.getBlock(wx + i, gg + 1, wz + k) == 0 && noise(wx * caveSmooth, ground * caveSmooth, wz * caveSmooth) > caveFreq && i < 13 && i > 3 && k < 13 && k > 3) {
+					if (random() < 0.0008 && world.getBlock(wx + i, gg, wz + k) != 0 && world.getBlock(wx + i, gg + 1, wz + k) == 0 && noise(wx * caveSmooth, ground * caveSmooth, wz * caveSmooth) > caveFreq && i < 10 && i > 4 && k < 10 && k > 4) {
 						spawnMushroom(wx + i, gg + 1, wz + k);
 					}
 					if (biome == "forest") {
@@ -5433,7 +5643,7 @@ var init = delag(function () {
 
 				}
 
-				if (random() < 0.007 && i > 7 && i < 9 && k > 7 && k < 9 && this.getBlock(i, ground, k) && noise(wx * caveSmooth, ground * caveSmooth, wz * caveSmooth) > caveFreq) {
+				if (!struct && random() < 0.007 && i > 7 && i < 9 && k > 7 && k < 9 && this.getBlock(i, ground, k) && noise(wx * caveSmooth, ground * caveSmooth, wz * caveSmooth) > caveFreq) {
 					var sets = [
 						[
 							[blockIds.magma, blockIds.magma, blockIds.magma, blockIds.magma, blockIds.lava],
@@ -5487,7 +5697,7 @@ var init = delag(function () {
 
 
 				}
-				if (random() < ((biome == "plains") ? 0.007 : (biome == "desert") ? 0 : 0.003) && i == 8 && k == 8 && this.getBlock(i, ground, k) && noise(wx * caveSmooth, ground * caveSmooth, wz * caveSmooth) > caveFreq) {
+				if (!struct && random() < ((biome == "plains") ? 0.007 : (biome == "desert") ? 0 : 0.003) && i == 8 && k == 8 && this.getBlock(i, ground, k) && noise(wx * caveSmooth, ground * caveSmooth, wz * caveSmooth) > caveFreq) {
 					var gems = [blockIds.diamondOre, blockIds.goldOre, blockIds.emeraldOre, blockIds.lapisOre];
 					if (random() < 0.1) {
 						gems = [blockIds.diamondOre, blockIds.goldOre, blockIds.emeraldOre, blockIds.lapisOre, blockIds.diamondBlock, blockIds.lapisBlock, blockIds.emeraldBlock, blockIds.goldBlock];
@@ -5506,16 +5716,16 @@ var init = delag(function () {
 
 					// this.setBlock(i+6, ground+2, k, blockIds.netheriteBlock);
 				}
-				if (random() < ((biome == "jungle") ? 0.007 : (biome == "mountain" || biome == "mountains_edge" || biome == "mountain_ridge" || biome == "tall_mountain" ? 0.008 : 0.004)) && i == 8 && k == 4 && this.getBlock(i, ground, k) && noise(wx * caveSmooth, ground * caveSmooth, wz * caveSmooth) > caveFreq) {
+				if (!struct && random() < ((biome == "jungle") ? 0.007 : (biome == "mountain" || biome == "mountains_edge" || biome == "mountain_ridge" || biome == "tall_mountain" ? 0.006 : 0.004)) && i == 8 && k == 4 && this.getBlock(i, ground, k) && noise(wx * caveSmooth, ground * caveSmooth, wz * caveSmooth) > caveFreq) {
 					var gr = ground + 8;
 					var possibilities = {
 						desert: [{
 							main: [blockIds.sandstone, blockIds.smoothSandstone, blockIds.smoothSandstone, blockIds.smoothSandstone, blockIds.smoothSandstone, blockIds.chiseledSandstone, blockIds.cutSandstone],
-							treasure: [blockIds.lapisBlock, blockIds.diamondBlock, blockIds.copperBlock]
+							treasure: [blockIds.lava, blockIds.diamondBlock, blockIds.redstoneBlock]
 						}],
 						forest: [{
 							main: [blockIds.deepslateBricks],
-							treasure: [blockIds.diamondBlock, blockIds.lapisBlock, blockIds.emeraldBlock]
+							treasure: [blockIds.diamondBlock, blockIds.water, blockIds.emeraldBlock]
 						}],
 						forests_edge: [{
 							main: [blockIds.deepslateBricks],
@@ -5523,28 +5733,27 @@ var init = delag(function () {
 						}],
 						flower_forest: [{
 								main: [blockIds.deepslateBricks],
-								treasure: [blockIds.diamondBlock, blockIds.lapisBlock, blockIds.emeraldBlock]
+								treasure: [blockIds.diamondBlock, blockIds.emeraldBlock]
 							},
 							{
 								main: [blockIds.deepslateBricks],
-								treasure: [blockIds.diamondBlock, blockIds.lapisBlock, blockIds.emeraldBlock]
+								treasure: [blockIds.diamondBlock, blockIds.emeraldBlock]
 							},
-
 							{
 								main: [blockIds.emeraldBlock],
 								treasure: [blockIds.diamondBlock]
 							},
 							{
 								main: [blockIds.deepslateBricks],
-								treasure: [blockIds.diamondBlock, blockIds.lapisBlock, blockIds.emeraldBlock]
+								treasure: [blockIds.diamondBlock, blockIds.emeraldBlock]
 							},
 							{
 								main: [blockIds.deepslateBricks],
-								treasure: [blockIds.diamondBlock, blockIds.lapisBlock, blockIds.emeraldBlock]
+								treasure: [blockIds.diamondBlock, blockIds.emeraldBlock]
 							},
 							{
 								main: [blockIds.deepslateBricks],
-								treasure: [blockIds.diamondBlock, blockIds.lapisBlock, blockIds.emeraldBlock]
+								treasure: [blockIds.diamondBlock, blockIds.emeraldBlock]
 							},
 							{
 								main: [blockIds.diamondBlock],
@@ -5555,6 +5764,10 @@ var init = delag(function () {
 								main: [blockIds.polishedGranite, blockIds.polishedGranite, blockIds.polishedGranite, blockIds.polishedGranite, blockIds.granite],
 								treasure: [blockIds.lava, blockIds.diamondBlock, blockIds.emeraldBlock]
 							},
+              {
+								main: [blockIds.stone, blockIds.stone, blockIds.stone, blockIds.stone, blockIds.stone, blockIds.stone, blockIds.stone, blockIds.stone, blockIds.stone, blockIds.stone, blockIds.stone, blockIds.stone, blockIds.stone, blockIds.coalOre, blockIds.ironOre, blockIds.goldOre, blockIds.diamondOre, blockIds.lapisOre, blockIds.copperOre],
+								treasure: [blockIds.water, blockIds.diamondBlock, blockIds.netheriteBlock]
+  						},
 							{
 								main: [blockIds.stone, blockIds.andesite, blockIds.tuff],
 								treasure: [blockIds.lava, blockIds.diamondBlock, blockIds.emeraldBlock]
@@ -5580,7 +5793,7 @@ var init = delag(function () {
 						],
 						jungle: [{
 							main: [blockIds.cobblestone, blockIds.mossyCobble, blockIds.stoneBricks, blockIds.mossyStoneBricks],
-							treasure: [blockIds.netheriteBlock, blockIds.diamondBlock]
+							treasure: [blockIds.diamondBlock, blockIds.emeraldBlock, blockIds.water]
 						}],
 						mountain: [{
 							main: [blockIds.cobbledDeepslate, blockIds.cobbledDeepslate, blockIds.cobbledDeepslate, blockIds.deepslate],
@@ -5808,8 +6021,7 @@ var init = delag(function () {
 						this.setBlock(i, j, k, choice([blockIds.redMushroom, blockIds.brownMushroom]));
 					}
 				}
-
-				if (random() < (biome == "mountain" || biome == "mountains_edge" || biome == "tall_mountain" ? 0 : 0.00002) && i > 3 && i < 13 && k > 3 && k < 13 && this.getBlock(i, ground, k) && noise(wx * caveSmooth, ground * caveSmooth, wz * caveSmooth) > caveFreq) {
+				if (!struct && random() < (biome == "mountain" || biome == "mountains_edge" || biome == "tall_mountain" ? 0 : 0.00002) && i > 3 && i < 13 && k > 3 && k < 13 && this.getBlock(i, ground, k) && noise(wx * caveSmooth, ground * caveSmooth, wz * caveSmooth) > caveFreq) {
 					this.setBlock(i, ground + 1, k, blockIds.lava);
 					this.setBlock(i, ground, k, blockIds.deepslateBricks);
 
@@ -5858,7 +6070,107 @@ var init = delag(function () {
 					}
 
 				}
+				if (struct == "village") {
+					if (i == 8 && k == 8 && random() < 0.75 && this.getBlock(i, ground, k) == blockIds.grassBlock) {
+						if (random() > 0.7) {
+							var houseCenter = [choice([6, 7, 8, 9, 10]), choice([6, 7, 8, 9, 10])];
+							var houseopening = choice([[choice([houseCenter[0]-3, houseCenter[0]+3]), houseCenter[1]], [houseCenter[0], choice([houseCenter[1]-3, houseCenter[1]+3])]]);
 
+							for (var i2 = houseCenter[0]-3; i2 <= houseCenter[0]+3; i2++) {
+								for (var k2 = houseCenter[1]-3; k2 <= houseCenter[1]+3; k2++) {
+									if (Math.abs(houseCenter[0]-i2) != 3 && Math.abs(houseCenter[1]-k2) != 3) {
+										this.setBlock(i2, ground+6, k2, blockIds.sprucePlanks);
+									}
+									this.spawnPillar3(i2, Math.round(noise((i2+this.x) * generator.biome[biome].smooth, (k2+this.z) * generator.biome[biome].smooth) * generator.biome[biome].height) + generator.biome[biome].extra, ground+1, k2, ((Math.abs(houseCenter[0]-i2) == 3 && Math.abs(houseCenter[1]-k2) == 3) ? [blockIds.oakLog] : [blockIds.stoneBricks, blockIds.stoneBricks, blockIds.stoneBricks, blockIds.mossyStoneBricks]))
+									if (Math.abs(houseCenter[0]-i2) == 3 || Math.abs(houseCenter[1]-k2) == 3) {
+										this.spawnPillar3(i2, (i2 == houseopening[0] && k2 == houseopening[1] ? ground+4 : ground+1), ground+4, k2, ((Math.abs(houseCenter[0]-i2) == 3 && Math.abs(houseCenter[1]-k2) == 3) ? [blockIds.oakLog] : [blockIds.stoneBricks, blockIds.stoneBricks, blockIds.stoneBricks, blockIds.mossyStoneBricks]))
+									}
+									if ((((i2 == houseCenter[0]+3 || i2 == houseCenter[0]-3) && (k2 == houseCenter[1] || k2 == houseCenter[1]-1 || k2 == houseCenter[1]+1))|| (k2 == houseCenter[1]-3 || k2 == houseCenter[1]+3) && (i2 == houseCenter[0] || i2 == houseCenter[0]+1 || i2 == houseCenter[0]-1)) && ((i2 != houseopening[0]-1 && i2 != houseopening[0]+1 && i2 != houseopening[0]) || (k2 != houseopening[1] && k2 != houseopening[1]-1 && k2 != houseopening[1]+1))) {
+										this.setBlock(i2, ground+3, k2, blockIds.glass)
+									}
+								}
+							}
+
+							for (var i2 = houseCenter[0]-4; i2 <= houseCenter[0]+4; i2++) {
+								for (var k2 = houseCenter[1]-4; k2 <= houseCenter[1]+4; k2++) {
+									if (((Math.abs(houseCenter[0]-i2) == 4) || (Math.abs(houseCenter[1]-k2) == 4)) && Math.abs(houseCenter[1]-k2) != Math.abs(houseCenter[0]-i2)) {
+										this.setBlock(i2, ground+5, k2, blockIds.sprucePlanks)
+									}
+									else if ((Math.abs(houseCenter[0]-i2) == 3) || (Math.abs(houseCenter[1]-k2) == 3)) {
+										if (Math.abs(houseCenter[1]-k2) == Math.abs(houseCenter[0]-i2)) {
+											this.setBlock(i2, ground+5, k2, blockIds.sprucePlanks)
+										}
+										else {
+											this.setBlock(i2, ground+5, k2, blockIds.stoneBricks)
+											this.setBlock(i2, ground+6, k2, blockIds.sprucePlanks)
+										}
+									}
+								}
+							}
+							// this.deleteBlock(houseCenter[0], ground, houseCenter[1])
+							this.setBlock(houseCenter[0], ground+1, houseCenter[1], choice([blockIds.stoneBricks, blockIds.stoneBricks, blockIds.stoneBricks, blockIds.stoneBricks, blockIds.stoneBricks, blockIds.emeraldBlock, blockIds.emeraldBlock, blockIds.emeraldBlock, blockIds.diamondBlock]))
+						}
+						else {
+							var houseCenter = [choice([6, 7, 8, 9, 10]), choice([6, 7, 8, 9, 10])];
+							var houseopening = choice([[choice([houseCenter[0]-2, houseCenter[0]+2]), houseCenter[1]], [houseCenter[0], choice([houseCenter[1]-2, houseCenter[1]+2])]]);
+
+							for (var i2 = houseCenter[0]-2; i2 <= houseCenter[0]+2; i2++) {
+								for (var k2 = houseCenter[1]-2; k2 <= houseCenter[1]+2; k2++) {
+									if (Math.abs(houseCenter[0]-i2) != 2 && Math.abs(houseCenter[1]-k2) != 2) {
+										this.setBlock(i2, ground+6, k2, blockIds.sprucePlanks);
+									}
+									this.spawnPillar3(i2, Math.round(noise((i2+this.x) * generator.biome[biome].smooth, (k2+this.z) * generator.biome[biome].smooth) * generator.biome[biome].height) + generator.biome[biome].extra, ground+1, k2, ((Math.abs(houseCenter[0]-i2) == 2 && Math.abs(houseCenter[1]-k2) == 2) ? [blockIds.oakLog] : [blockIds.stoneBricks, blockIds.stoneBricks, blockIds.stoneBricks, blockIds.mossyStoneBricks]))
+									if (Math.abs(houseCenter[0]-i2) == 2 || Math.abs(houseCenter[1]-k2) == 2) {
+										this.spawnPillar3(i2, (i2 == houseopening[0] && k2 == houseopening[1] ? ground+4 : ground+1), ground+4, k2, ((Math.abs(houseCenter[0]-i2) == 2 && Math.abs(houseCenter[1]-k2) == 2) ? [blockIds.oakLog] : [blockIds.stoneBricks, blockIds.stoneBricks, blockIds.stoneBricks, blockIds.mossyStoneBricks]))
+									}
+									if ((((i2 == houseCenter[0]+2 || i2 == houseCenter[0]-2) && k2 == houseCenter[1]) || ((k2 == houseCenter[1]-2 || k2 == houseCenter[1]+2) && i2 == houseCenter[0])) && (i2 != houseopening[0] || k2 != houseopening[1])) {
+										this.setBlock(i2, ground+3, k2, blockIds.glass)
+									}
+								}
+							}
+
+							for (var i2 = houseCenter[0]-3; i2 <= houseCenter[0]+3; i2++) {
+								for (var k2 = houseCenter[1]-3; k2 <= houseCenter[1]+3; k2++) {
+									if (((Math.abs(houseCenter[0]-i2) == 3) || (Math.abs(houseCenter[1]-k2) == 3)) && Math.abs(houseCenter[1]-k2) != Math.abs(houseCenter[0]-i2)) {
+										this.setBlock(i2, ground+5, k2, blockIds.sprucePlanks)
+									}
+									else if ((Math.abs(houseCenter[0]-i2) == 2) || (Math.abs(houseCenter[1]-k2) == 2)) {
+										if (Math.abs(houseCenter[1]-k2) == Math.abs(houseCenter[0]-i2)) {
+											this.setBlock(i2, ground+5, k2, blockIds.sprucePlanks)
+										}
+										else {
+											this.setBlock(i2, ground+5, k2, blockIds.stoneBricks)
+											this.setBlock(i2, ground+6, k2, blockIds.sprucePlanks)
+										}
+									}
+								}
+							}
+
+							for (var i2 = houseCenter[0]-1; i2 <= houseCenter[0]+1; i2+=2) {
+								for (var k2 = houseCenter[1]-1; k2 <= houseCenter[1]+1; k2+=2) {
+									if (random() < 0.4) {
+										this.setBlock(i2, ground+2, k2, choice([blockIds.craftingTable, blockIds.bookshelf, blockIds.fletchingTable, blockIds.cartographyTable, blockIds.barrel, blockIds.smithingTable]))
+									}
+								}
+							}
+						}
+
+
+
+					}
+					if ((i < 5 || i > 11) && (k < 5 || k > 11) && random() < 0.001) {
+						var b = (random() > 0.95 ? blockIds.tnt : blockIds.hayBlock)
+						for (var i2 = i - choice([0, 1, 2]); i2 <= i + choice([0, 1, 2]); i2++) {
+							for (var k2 = k - choice([0, 1, 2]); k2 <= k + choice([0, 1, 2]); k2++) {
+								for (var h = 1; h <= choice([1, 1, 2, 2, 3]); h++) {
+									var g = Math.round(noise((i2+this.x) * generator.biome[biome].smooth, (k2+this.z) * generator.biome[biome].smooth) * generator.biome[biome].height) + generator.biome[biome].extra;
+									if (this.getBlock(i2, g, k2))
+									this.setBlock(i2, g+h, k2, b);
+								}
+							}
+						}
+					}
+				}
 
 				// Blocks of each per chunk in Minecraft
 				// Coal: 60
@@ -7218,7 +7530,7 @@ var init = delag(function () {
 					// b = (deepStones) ? deepStones.stone : blockIds.deepslate;
 					var rad = choice([2, 3, 4, 5]);
 					for (var j = 1; j < gen - 3; j++) {
-						if (noise((chunk.x + i) * caveSmooth, j * caveSmooth, (chunk.z + k) * caveSmooth) > caveFreq || j < 3) {
+						if (noise((chunk.x + i) * caveSmooth, j * caveSmooth, (chunk.z + k) * caveSmooth) > caveFreq || j < 2) {
 							if (j < 20 + choice([0, 1])) {
 								if (deepStones && euclideanDistance(i, 8, j, deepStones.y, k, 8) < rad) {
 									chunk.setBlock(i, j, k, deepStones.stone);
@@ -7238,13 +7550,19 @@ var init = delag(function () {
 							b = blockIds.stone;
 						}
 					}
+          if (!chunk.getBlock(i, 2, k) && chunk.getBlock(i, 1, k)) {
+						if (biome == "plains") {
+							chunk.setBlock(i, 2, k, blockIds.lava);
+						} else {
+							chunk.setBlock(i, 2, k, blockIds.deepslate);
+						}
+					}
 					if (!chunk.getBlock(i, 3, k) && chunk.getBlock(i, 2, k)) {
 						if (biome != "taiga" && biome != "jungle") {
 							chunk.setBlock(i, 3, k, blockIds.lava);
 						} else {
 							chunk.setBlock(i, 3, k, blockIds.deepslate);
 						}
-
 					}
 				} else if (biome == "mountain" || biome == "mountains_edge" || biome == "tall_mountain" || biome == "mountain_ridge") {
 					gen = Math.round(noise((trueX + i) * smoothness, (trueZ + k) * smoothness) * hilliness) + generator.extra;
@@ -7264,7 +7582,7 @@ var init = delag(function () {
 					}
 					var rad = choice([2, 3, 4, 5]);
 					for (var j = 1; j < gen - 3; j++) {
-						if (noise((chunk.x + i) * caveSmooth, j * caveSmooth, (chunk.z + k) * caveSmooth) > caveFreq || j < 3) {
+						if (noise((chunk.x + i) * caveSmooth, j * caveSmooth, (chunk.z + k) * caveSmooth) > caveFreq || j < 2) {
 							if (j < 20 + choice([0, 1])) {
 								if (deepStones && euclideanDistance(i, 8, j, deepStones.y, k, 8) < rad) {
 									chunk.setBlock(i, j, k, deepStones.stone);
@@ -7284,6 +7602,9 @@ var init = delag(function () {
 							b = blockIds.stone;
 						}
 					}
+          if (!chunk.getBlock(i, 2, k) && chunk.getBlock(i, 1, k)) {
+            chunk.setBlock(i, 2, k, blockIds.water);
+          }
 					if (!chunk.getBlock(i, 3, k) && chunk.getBlock(i, 2, k)) {
 						chunk.setBlock(i, 3, k, blockIds.water);
 					}
@@ -7305,7 +7626,7 @@ var init = delag(function () {
 					}
 					var rad = choice([2, 3, 4, 5]);
 					for (var j = 1; j < gen - 3; j++) {
-						if (noise((chunk.x + i) * caveSmooth, j * caveSmooth, (chunk.z + k) * caveSmooth) > caveFreq || j < 3) {
+						if (noise((chunk.x + i) * caveSmooth, j * caveSmooth, (chunk.z + k) * caveSmooth) > caveFreq || j < 4) {
 							if (j < 20 + choice([0, 1])) {
 								if (deepStones && euclideanDistance(i, 8, j, deepStones.y, k, 8) < rad) {
 									chunk.setBlock(i, j, k, deepStones.stone);
@@ -7945,6 +8266,19 @@ var init = delag(function () {
 				p.velocity.y -= 0.06 * dt;
 			}
 		}
+    else if (inLiquid(p.x, p.y, p.z)) {
+      if (Key[" "]) {
+        p.velocity.y = 0.25
+			}
+    }
+    else if (canClimb(p.x, p.y, p.z)) {
+      if (Key[" "]) {
+        p.velocity.y = 0.15
+			}
+      if (Key.shift) {
+				p.velocity.y -= 0.06 * dt;
+			}
+    }
 		if (Key.arrowleft) {
 			p.ry -= 0.1 * dt;
 		}
@@ -8938,7 +9272,7 @@ var init = delag(function () {
 				textSize(12);
 				ctx.textAlign = 'right';
 				ctx.fillStyle = "white";
-				text("v2.0.0", width - 10, height - 10);
+				text("v2.1.1", width - 10, height - 10);
 			}
 		} else if (screen === "play") {
 			controls();

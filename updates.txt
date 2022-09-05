@@ -1,3 +1,31 @@
+v2.2.0 - 9/4/22
+----------------------
+Village update!
+----------------------
++ It speaks for itself lol
++ Randomly spawning villages with houses & haybales
++ Rare chance for TNT to spawn instead of haybales
+
+
+v2.1.1 - 9/3/22
+----------------------
+Explosion changes
+----------------------
++ Updated blast resistance of deepslate ores
++ Added new custom "dangerous" nuke with custom blast radius
+
+
+2.1.0 - 8/3/22
+----------------------
+Climbing update
+----------------------
++ Added climbing blocks, such as fluids and vines
++ Shift on vines to stop descending
++ Climbing blocks now break falls
++ Rebalanced block hunt points
++ Limited vision inside of fluids
+
+
 v2.0.0 - 7/29/22
 ----------------------
 Major terrain update, physics changes
@@ -25,7 +53,7 @@ Major terrain update, physics changes
 + Beautified JS https://www.prettifyjs.net/
 + Raised lapis level to y36
 + Largened, smoothened biomes
-+ Decreased structure odds 
++ Decreased structure odds
 
 
 v1.3.3 - 6/9/22
