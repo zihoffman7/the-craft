@@ -1,3 +1,17 @@
+v2.3.0 - 9/8/22
+----------------------
+Sub-biome update!
+----------------------
++ Implemented biomes that don't change noise generation, but change feature generation
+  * snowy taiga
+  * ice caps
+  * giant taiga
+  * birch forest
+  * dotted mountains
++ Snow blocks now fall
++ Optimized taiga chunks, prevented them from de-rendering as easily
+
+
 v2.2.0 - 9/4/22
 ----------------------
 Village update!

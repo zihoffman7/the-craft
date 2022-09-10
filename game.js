@@ -1864,7 +1864,15 @@ var init = delag(function () {
 		},
 		{
 			name: "snow",
-			blastResistance: 0.01
+			blastResistance: 0.01,
+			onload: function (x, y, z) {
+				setTimeout(function () {
+					if ((!world.getBlock(x, y - 1, z) || blockData[world.getBlock(x, y - 1, z)].crossShape) && blockData[world.getBlock(x, y, z)].name == "snow") {
+						explode(x, y, z, 0);
+						world.setBlock(x, y - 1, z, blockIds.snow)
+					}
+				}, 100)
+			}
 		},
 		{
 			name: "grass",
@@ -4680,13 +4688,33 @@ var init = delag(function () {
 		}
 	}
 
-	function getBigStruct(x, z, biome) {
+	function getSubBiome(x, z, biome) {
 		if (worldmodes[worldmode].name == "Normal") {
-			if (noise(x * 0.0029, z * 0.0029) > 0.49 && noise(x * 0.0029, z * 0.0029) < 0.57 && getBiome(x,z,biome) == "plains") {
-				return "village"
+			if (noise(x * 0.0029, z * 0.0029) > 0.61 && noise(x * 0.0029, z * 0.0029) < 0.72 && getBiome(x,z,biome).includes("mountain")) {
+				return "ice_caps";
+			}
+			if (noise(x / 2 * generator.biomeSmooth, z / 2 * generator.biomeSmooth) > 0.52 && noise(x * 0.0029, z * 0.0029) < 0.54 && getBiome(x,z,biome).includes("mountain")) {
+				return "snowy_taiga";
+			}
+			if (noise(x / 2 * generator.biomeSmooth, z / 2 * generator.biomeSmooth) > 0.475 && noise(x * 0.0029, z * 0.0029) >= 0.54 && noise(x * 0.0029, z * 0.0029) <= 0.61 && getBiome(x,z,biome).includes("mountain")) {
+				return "dotted_mountains";
+			}
+			if (noise(x * 0.0029, z * 0.0029) > 0.595 && getBiome(x,z,biome) == "taiga") {
+				return "tall_taiga";
+			}
+			if (noise(x * 0.0022, z * 0.0022) > 0.55 && getBiome(x,z,biome) == "forest") {
+				return "birch_forest";
 			}
 		}
 		return false;
+	}
+
+	function getBigStruct(x, z, biome) {
+		if (worldmodes[worldmode].name == "Normal") {
+			if (noise(x * 0.0029, z * 0.0029) > 0.495 && noise(x * 0.0029, z * 0.0029) < 0.57 && getBiome(x,z,biome) == "plains") {
+				return "village";
+			}
+		}
 	}
 
 	function choice(l) {
@@ -4715,7 +4743,7 @@ var init = delag(function () {
 		this.cleanSections = [];
 		this.optimized = false;
 		this.generated = false; // Terrain
-		this.populated = false; // Structures
+		this.populated = false; // subbiomeures
 		this.lazy = false;
 		this.edited = false;
 	}
@@ -4791,11 +4819,14 @@ var init = delag(function () {
 		}
 	};
 
-	Chunk.prototype.spawnPillar = function (xx, zz, yBuff, blocks, gems) {
+	Chunk.prototype.spawnRuinedPillar = function (xx, zz, yBuff, blocks, gems) {
 		var bb = getBiome(this.x + xx, this.z + zz, noise((this.x + xx) * generator.biomeSmooth, (this.z + zz) * generator.biomeSmooth));
 
 		grd = Math.round(noise(xx * generator.biome[bb].smooth, zz * generator.biome[bb].smooth) * generator.biome[bb].height) + generator.biome[bb].extra;
-		for (var g = grd - 10; g <= grd + yBuff + Math.floor(random() * 8); g++) {
+		if (!this.getBlock(xx, grd, zz)) {
+			return;
+		}
+		for (var g = grd; g <= grd + yBuff + Math.floor(random() * 8); g++) {
 			if (random() < 0.05) {
 				this.setBlock(xx, g, zz, choice(gems));
 			} else {
@@ -4846,7 +4877,8 @@ var init = delag(function () {
 		for (var i = 0; i < 16; i++) {
 			for (var k = 0; k < 16; k++) {
 				var biome = getBiome(this.x + i, this.z + k, noise((this.x + i) * generator.biomeSmooth, (this.z + k) * generator.biomeSmooth));
-				var struct = getBigStruct(this.x + i, this.z + k, noise((this.x + i) * generator.biomeSmooth, (this.z + k) * generator.biomeSmooth))
+				var subbiome = getSubBiome(this.x + i, this.z + k, noise((this.x + i) * generator.biomeSmooth, (this.z + k) * generator.biomeSmooth));
+				var struct = getBigStruct(this.x + i, this.z + k, noise((this.x + i) * generator.biomeSmooth, (this.z + k) * generator.biomeSmooth));
 				var caveSmooth = generator.biome[biome].caveSmooth;
 				var caveFreq = generator.biome[biome].caveFrequency;
 
@@ -4890,9 +4922,9 @@ var init = delag(function () {
 						}
 						if (random() < 0.012 && noise(wx * caveSmooth, ground * caveSmooth, wz * caveSmooth) > caveFreq) {
 
-							top = ground + Math.floor(4.5 + random(2.5));
+							top = ground + Math.floor(4.5 + random((subbiome == "birch_forest" ? 4.5 : 2.5)));
 							rand = Math.floor(random(4096));
-							var tree = random() < 0.8 ? blockIds.oakLog : ++top && blockIds.birchLog;
+							var tree = random() < (subbiome == "birch_forest" ? 0 : 0.9) ? blockIds.oakLog : ++top && blockIds.birchLog;
 
 							//Center
 							for (var j = ground + 1; j <= top; j++) {
@@ -5133,7 +5165,7 @@ var init = delag(function () {
 						this.setBlock(i, ground + 1, k, choice([blockIds.sweetBerryBush, blockIds.grass, blockIds.sweetBerryBush, blockIds.brownMushroom, blockIds.redMushroom]));
 					}
 
-					if (random() < 0.016 && noise(wx * caveSmooth, ground * caveSmooth, wz * caveSmooth) > caveFreq) {
+					if (random() < (subbiome == "tall_taiga" ? 0.008 : 0.018) && noise(wx * caveSmooth, ground * caveSmooth, wz * caveSmooth) > caveFreq) {
 						tall = Math.floor(6 + random(8)) //5 to 10
 						top = ground + tall
 						var tree = blockIds.spruceLog
@@ -5241,8 +5273,8 @@ var init = delag(function () {
 								}
 							}
 						}
-					} else if (random() < 0.0006 && noise(wx * caveSmooth, ground * caveSmooth, wz * caveSmooth) > caveFreq) {
-						tall = Math.floor(12 + random(18))
+					} else if (subbiome == "tall_taiga" && random() < 0.003 && noise(wx * caveSmooth, ground * caveSmooth, wz * caveSmooth) > caveFreq) {
+						tall = Math.floor(20 + random(10))
 						top = ground + tall
 						var tree = blockIds.spruceLog
 						var leaf = blockIds.spruceLeaves
@@ -5643,7 +5675,7 @@ var init = delag(function () {
 
 				}
 
-				if (!struct && random() < 0.007 && i > 7 && i < 9 && k > 7 && k < 9 && this.getBlock(i, ground, k) && noise(wx * caveSmooth, ground * caveSmooth, wz * caveSmooth) > caveFreq) {
+				if (!subbiome && random() < 0.007 && i > 7 && i < 9 && k > 7 && k < 9 && this.getBlock(i, ground, k) && noise(wx * caveSmooth, ground * caveSmooth, wz * caveSmooth) > caveFreq) {
 					var sets = [
 						[
 							[blockIds.magma, blockIds.magma, blockIds.magma, blockIds.magma, blockIds.lava],
@@ -5697,7 +5729,7 @@ var init = delag(function () {
 
 
 				}
-				if (!struct && random() < ((biome == "plains") ? 0.007 : (biome == "desert") ? 0 : 0.003) && i == 8 && k == 8 && this.getBlock(i, ground, k) && noise(wx * caveSmooth, ground * caveSmooth, wz * caveSmooth) > caveFreq) {
+				if (!subbiome && random() < ((biome == "plains") ? 0.007 : (biome == "desert") ? 0 : 0.003) && i == 8 && k == 8 && this.getBlock(i, ground, k) && noise(wx * caveSmooth, ground * caveSmooth, wz * caveSmooth) > caveFreq) {
 					var gems = [blockIds.diamondOre, blockIds.goldOre, blockIds.emeraldOre, blockIds.lapisOre];
 					if (random() < 0.1) {
 						gems = [blockIds.diamondOre, blockIds.goldOre, blockIds.emeraldOre, blockIds.lapisOre, blockIds.diamondBlock, blockIds.lapisBlock, blockIds.emeraldBlock, blockIds.goldBlock];
@@ -5705,10 +5737,10 @@ var init = delag(function () {
 					for (var x = 3; x < 8; x++) {
 						for (var c = x; c >= 0; c--) {
 							if (random() < 0.25) {
-								this.spawnPillar(i + x, k + c, 6, [blockIds.stoneBricks, blockIds.mossyStoneBricks, blockIds.cobblestone, blockIds.mossyCobble, blockIds.chiseledStoneBricks], gems);
+								this.spawnRuinedPillar(i + x, k + c, 6, [blockIds.stoneBricks, blockIds.mossyStoneBricks, blockIds.cobblestone, blockIds.mossyCobble, blockIds.chiseledStoneBricks], gems);
 							}
 							if (random() < 0.25) {
-								this.spawnPillar(i + x, k - c, 6, [blockIds.stoneBricks, blockIds.mossyStoneBricks, blockIds.cobblestone, blockIds.mossyCobble, blockIds.chiseledStoneBricks], gems);
+								this.spawnRuinedPillar(i + x, k - c, 6, [blockIds.stoneBricks, blockIds.mossyStoneBricks, blockIds.cobblestone, blockIds.mossyCobble, blockIds.chiseledStoneBricks], gems);
 							}
 						}
 					}
@@ -5716,7 +5748,7 @@ var init = delag(function () {
 
 					// this.setBlock(i+6, ground+2, k, blockIds.netheriteBlock);
 				}
-				if (!struct && random() < ((biome == "jungle") ? 0.007 : (biome == "mountain" || biome == "mountains_edge" || biome == "mountain_ridge" || biome == "tall_mountain" ? 0.006 : 0.004)) && i == 8 && k == 4 && this.getBlock(i, ground, k) && noise(wx * caveSmooth, ground * caveSmooth, wz * caveSmooth) > caveFreq) {
+				if (!subbiome && random() < ((biome == "jungle") ? 0.007 : (biome == "mountain" || biome == "mountains_edge" || biome == "mountain_ridge" || biome == "tall_mountain" ? 0.006 : 0.004)) && i == 8 && k == 4 && this.getBlock(i, ground, k) && noise(wx * caveSmooth, ground * caveSmooth, wz * caveSmooth) > caveFreq) {
 					var gr = ground + 8;
 					var possibilities = {
 						desert: [{
@@ -6021,7 +6053,7 @@ var init = delag(function () {
 						this.setBlock(i, j, k, choice([blockIds.redMushroom, blockIds.brownMushroom]));
 					}
 				}
-				if (!struct && random() < (biome == "mountain" || biome == "mountains_edge" || biome == "tall_mountain" ? 0 : 0.00002) && i > 3 && i < 13 && k > 3 && k < 13 && this.getBlock(i, ground, k) && noise(wx * caveSmooth, ground * caveSmooth, wz * caveSmooth) > caveFreq) {
+				if (!subbiome && random() < (biome == "mountain" || biome == "mountains_edge" || biome == "tall_mountain" ? 0 : 0.00002) && i > 3 && i < 13 && k > 3 && k < 13 && this.getBlock(i, ground, k) && noise(wx * caveSmooth, ground * caveSmooth, wz * caveSmooth) > caveFreq) {
 					this.setBlock(i, ground + 1, k, blockIds.lava);
 					this.setBlock(i, ground, k, blockIds.deepslateBricks);
 
@@ -6172,6 +6204,133 @@ var init = delag(function () {
 					}
 				}
 
+				if (subbiome == "ice_caps") {
+					if (this.getBlock(i, ground+(biome == "mountains_edge" ? -3 : 0), k) && (biome != "mountains_edge" || this.getBlock(i, ground+(biome == "mountains_edge" ? -3 : 0), k) == blockIds.gravel)) {
+						this.setBlock(i, ground+(biome == "mountains_edge" ? -3 : 0), k, choice([blockIds.packedIce, blockIds.packedIce, blockIds.packedIce, blockIds.packedIce, blockIds.packedIce, blockIds.packedIce, blockIds.packedIce, blockIds.packedIce, blockIds.packedIce, blockIds.packedIce, blockIds.packedIce, blockIds.packedIce, blockIds.packedIce, blockIds.packedIce, blockIds.packedIce, blockIds.packedIce, blockIds.packedIce, blockIds.packedIce, blockIds.packedIce, blockIds.packedIce, blockIds.packedIce, blockIds.packedIce, blockIds.packedIce, blockIds.packedIce, blockIds.packedIce, blockIds.packedIce, blockIds.packedIce, blockIds.packedIce, blockIds.packedIce, blockIds.packedIce, blockIds.packedIce, blockIds.packedIce, blockIds.packedIce, blockIds.packedIce, blockIds.packedIce, blockIds.packedIce, blockIds.packedIce, blockIds.packedIce, blockIds.packedIce, blockIds.packedIce, blockIds.packedIce, blockIds.packedIce, blockIds.packedIce, blockIds.packedIce, blockIds.packedIce, blockIds.packedIce, blockIds.packedIce, blockIds.packedIce, blockIds.packedIce, blockIds.packedIce,blockIds.snow]));
+						if (biome != "mountains_edge") {
+							this.setBlock(i, ground-1, k, blockIds.packedIce);
+							this.setBlock(i, ground-2, k, blockIds.packedIce);
+						}
+					}
+				}
+
+				if (subbiome == "snowy_taiga") {
+					if (this.getBlock(i, ground + (biome == "mountains_edge" ? -3 : 0), k)) {
+						this.setBlock(i, ground + (biome == "mountains_edge" ? -3 : 0), k, blockIds.snow);
+						this.setBlock(i, ground-1 + (biome == "mountains_edge" ? -3 : 0), k, blockIds.snow);
+					}
+					if (this.getBlock(i, ground + (biome == "mountains_edge" ? -3 : 0), k) && random() < 0.016 && noise(wx * caveSmooth, ground * caveSmooth, wz * caveSmooth) > caveFreq) {
+						tall = Math.floor(6 + random(8)) //5 to 10
+						top = ground + (biome == "mountains_edge" ? -3 : 0) + tall
+						var tree = blockIds.spruceLog
+						var leaf = blockIds.spruceLeaves
+
+						//Center
+						for (var j = ground + 1 + (biome == "mountains_edge" ? -3 : 0); j <= top; j++) {
+							this.setBlock(i, j, k, tree)
+						}
+						this.setBlock(i, top + 1, k, leaf)
+
+						//Bottom leaves
+						for (var x = -2; x <= 2; x++) {
+							for (var z = -2; z <= 2; z++) {
+								if (x || z) {
+									if ((x * z & 7) === 4) {
+										place = rand & 1
+										rand >>>= 1
+										if (place) {
+											world.spawnBlock(wx + x, top - 2, wz + z, leaf)
+										}
+									} else {
+										world.spawnBlock(wx + x, top - 2, wz + z, leaf)
+									}
+								}
+							}
+						}
+
+						//2nd layer leaves
+						for (var x = -2; x <= 2; x++) {
+							for (var z = -2; z <= 2; z++) {
+								if (x || z) {
+									if ((x * z & 7) === 4) {
+										place = rand & 1
+										rand >>>= 1
+										if (place) {
+											world.spawnBlock(wx + x, top - 1, wz + z, leaf)
+										}
+									} else {
+										world.spawnBlock(wx + x, top - 1, wz + z, leaf)
+									}
+								}
+							}
+						}
+
+						//3rd layer leaves
+						for (var x = -1; x <= 1; x++) {
+							for (var z = -1; z <= 1; z++) {
+								if (x || z) {
+									if (x & z) {
+										place = rand & 1
+										rand >>>= 1
+										if (place) {
+											world.spawnBlock(wx + x, top, wz + z, leaf)
+										}
+									} else {
+										world.spawnBlock(wx + x, top, wz + z, leaf)
+									}
+								}
+							}
+						}
+
+						//Top leaves
+						world.spawnBlock(wx + 1, top + 1, wz, leaf)
+						world.spawnBlock(wx, top + 1, wz - 1, leaf)
+						world.spawnBlock(wx, top + 1, wz + 1, leaf)
+						world.spawnBlock(wx - 1, top + 1, wz, leaf)
+
+						world.spawnBlock(wx + 1, top - 3, wz, leaf)
+						world.spawnBlock(wx, top - 3, wz - 1, leaf)
+						world.spawnBlock(wx, top - 3, wz + 1, leaf)
+						world.spawnBlock(wx - 1, top - 3, wz, leaf)
+
+						if (tall > 7 && tall < 10 && random() < 0.7) {
+							for (var x = -2; x <= 2; x++) {
+								for (var z = -2; z <= 2; z++) {
+									if (x || z) {
+										if ((x * z & 7) === 4) {
+											place = rand & 1
+											rand >>>= 1
+											if (place) {
+												world.spawnBlock(wx + x, top - (tall - 2), wz + z, leaf)
+											}
+										} else {
+											world.spawnBlock(wx + x, top - (tall - 2), wz + z, leaf)
+										}
+									}
+								}
+							}
+
+							for (var x = -1; x <= 1; x++) {
+								for (var z = -1; z <= 1; z++) {
+									if (x || z) {
+										if ((x * z & 7) === 4) {
+											place = rand & 1
+											rand >>>= 1
+											if (place) {
+												world.spawnBlock(wx + x, top - (tall - 4), wz + z, leaf)
+											}
+										} else {
+											world.spawnBlock(wx + x, top - (tall - 4), wz + z, leaf)
+										}
+									}
+								}
+							}
+						}
+				}
+					if (random() < 0.003 && noise(wx * caveSmooth, ground+(biome == "mountains_edge" ? -3 : 0) * caveSmooth, wz * caveSmooth) > caveFreq && this.getBlock(i, ground+(biome == "mountains_edge" ? -3 : 0), k) == blockIds.snow) {
+						this.setBlock(i, ground + 1 + (biome == "mountains_edge" ? -3 : 0), k, choice([blockIds.sweetBerryBush,blockIds.sweetBerryBush,blockIds.sweetBerryBush,blockIds.sweetBerryBush,blockIds.sweetBerryBush,blockIds.sweetBerryBush,blockIds.sweetBerryBush,blockIds.deadBush]));
+					}
+				}
 				// Blocks of each per chunk in Minecraft
 				// Coal: 60
 				// Iron: 50
@@ -7494,6 +7653,8 @@ var init = delag(function () {
 			b = blockIds.stone;
 			for (var k = 0; k < 16; k++) {
 				var biome = getBiome(trueX + i, trueZ + k, noise((trueX + i) * generator.biomeSmooth, (trueZ + k) * generator.biomeSmooth));
+				var subbiome = getSubBiome(trueX + i, trueZ + k, noise((trueX + i) * generator.biomeSmooth, (trueZ + k) * generator.biomeSmooth));
+
 				if (biome == "superflat") {
 					gl.uniform1f(glCache.locations.lightDepthChange, false);
 					chunk.setBlock(i, 4, k, blockIds.grassBlock);
@@ -7568,17 +7729,17 @@ var init = delag(function () {
 					gen = Math.round(noise((trueX + i) * smoothness, (trueZ + k) * smoothness) * hilliness) + generator.extra;
 
 					if (noise((chunk.x + i) * caveSmooth, (gen) * caveSmooth, (chunk.z + k) * caveSmooth) > caveFreq) {
-						chunk.setBlock(i, gen, k, (biome == "mountains_edge" ? choice([blockIds.stone, blockIds.stone, blockIds.gravel]) : (gen > 93 ? blockIds.packedIce : (gen == 93 ? choice([blockIds.snow, blockIds.packedIce]) : (gen > choice([87, 88]) ? blockIds.snow : blockIds.stone)))));
+						chunk.setBlock(i, gen, k, (biome == "mountains_edge" ? choice([blockIds.stone, blockIds.stone, blockIds.gravel]) : (gen > 93 ? blockIds.packedIce : (gen == 93 ? choice([blockIds.snow, blockIds.packedIce]) : (gen > choice([87, 88]) ? blockIds.snow : (subbiome == "dotted_mountains" ? choice([blockIds.stone, blockIds.stone,blockIds.tuff, blockIds.andesite]) : blockIds.stone))))));
 					}
 
 					if (noise((chunk.x + i) * caveSmooth, (gen - 1) * caveSmooth, (chunk.z + k) * caveSmooth) > caveFreq) {
-						chunk.setBlock(i, gen - 1, k, (gen - 1 > 94 ? blockIds.packedIce : (gen - 1 == 93 ? choice([blockIds.snow, blockIds.packedIce]) : (gen > choice([87, 88]) ? blockIds.snow : blockIds.stone))));
+						chunk.setBlock(i, gen - 1, k, (gen - 1 > 94 ? blockIds.packedIce : (gen - 1 == 93 ? choice([blockIds.snow, blockIds.packedIce]) : (gen > choice([87, 88]) ? blockIds.snow : (subbiome == "dotted_mountains" ? choice([blockIds.stone, blockIds.stone,blockIds.tuff, blockIds.andesite]) : blockIds.stone)))));
 					}
 					if (noise((chunk.x + i) * caveSmooth, (gen - 2) * caveSmooth, (chunk.z + k) * caveSmooth) > caveFreq) {
-						chunk.setBlock(i, gen - 2, k, (gen - 2 > 94 ? blockIds.packedIce : blockIds.stone));
+						chunk.setBlock(i, gen - 2, k, (gen - 2 > 94 ? blockIds.packedIce : (subbiome == "dotted_mountains" ? choice([blockIds.stone, blockIds.stone,blockIds.tuff, blockIds.andesite]) : blockIds.stone)));
 					}
 					if (noise((chunk.x + i) * caveSmooth, (gen - 3) * caveSmooth, (chunk.z + k) * caveSmooth) > caveFreq) {
-						chunk.setBlock(i, gen - 3, k, (gen - 3 > 94 ? blockIds.packedIce : blockIds.stone));
+						chunk.setBlock(i, gen - 3, k, (gen - 3 > 94 ? blockIds.packedIce : (subbiome == "dotted_mountains" ? choice([blockIds.stone, blockIds.stone,blockIds.tuff, blockIds.andesite]) : blockIds.stone)));
 					}
 					var rad = choice([2, 3, 4, 5]);
 					for (var j = 1; j < gen - 3; j++) {
@@ -8737,7 +8898,7 @@ var init = delag(function () {
 		})();
 
 
-		var str = "FPS: " + analytics.fps + "\nBiome: " + getBiome(p.x, p.z, noise((p.x) * generator.biomeSmooth, (p.z) * generator.biomeSmooth)) + "\nSeed: " + (parseInt(insertedSeed) ? insertedSeed : worldSeed.toString(36)) + "\nMode: " + worldmodes[worldmode].name + " " + gamemodes[gamemode].name + "\n" +
+		var str = "FPS: " + analytics.fps + "\nBiome: " + getBiome(p.x, p.z, noise((p.x) * generator.biomeSmooth, (p.z) * generator.biomeSmooth)) + "\nSub-biome: " + (getSubBiome(p.x, p.z, noise((p.x) * generator.biomeSmooth, (p.z) * generator.biomeSmooth))||"none")  +"\nSeed: " + (parseInt(insertedSeed) ? insertedSeed : worldSeed.toString(36)) + "\nMode: " + worldmodes[worldmode].name + " " + gamemodes[gamemode].name + "\n" +
 			"Rendered Chunks: " + renderedChunks.toLocaleString() + "/" + world.loaded.length + "\n" +
 			"Generated Chunks: " + generatedChunks.toLocaleString() + "\n" +
 			"Effects: " + (!effcts.length ? "None" : effcts.join(", "));
@@ -8747,7 +8908,7 @@ var init = delag(function () {
 		fastText(p2.x + "," + p2.y + "," + p2.z, width - 10, 15, 0, "#dce6e5");
 		ctx.textAlign = 'left';
 		textSize(8);
-		fastText(str, 5, height - 74, 12, "#dce6e5");
+		fastText(str, 5, height - 88, 12, "#dce6e5");
 		textSize(10);
 		if (gamemodes[gamemode].name == "Block Hunt") {
 			fastText("Hint: " + blockHunt.riddles[blockHunt.chosen].riddle, 5, 18, 12);
@@ -9272,7 +9433,7 @@ var init = delag(function () {
 				textSize(12);
 				ctx.textAlign = 'right';
 				ctx.fillStyle = "white";
-				text("v2.1.1", width - 10, height - 10);
+				text("v2.3.0", width - 10, height - 10);
 			}
 		} else if (screen === "play") {
 			controls();
