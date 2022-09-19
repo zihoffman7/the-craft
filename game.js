@@ -3,7 +3,7 @@ var canvas = document.getElementById("overlay");
 var ctx = canvas.getContext("2d");
 var savebox = document.getElementById("save-code"); // deprecated
 var sky = []; // RGB sky color
-var insertedSeed = "", toggleLookingAt = false;
+var insertedSeed = "", toggleLookingAt = false, nt = 0;
 
 const gamemodes = [{
 		name: "Creative",
@@ -143,6 +143,12 @@ const sounds = {
 		"repeat": false,
 		"bg": false
 	},
+	moan: {
+		"path": "audio/moan.mp3",
+		"volume": 1,
+		"repeat": false,
+		"bg": false
+	}
 };
 
 /*
@@ -3698,8 +3704,22 @@ var init = delag(function () {
 				p.velocity.y = p.jumpSpeed;
 				p.onGround = false;
 			} else if (Key["6"] && Key["9"]) {
-				reach = 24;
-				p.nut();
+				if (nt == 0) {
+					var s = new Sound(sounds.moan);
+					s.play();
+					nt = 600;
+					var f = setInterval(function() {
+						if (nt > 520 && Key["6"] && Key["9"]) {
+							reach = 24;
+							p.nut();
+						}
+						nt--;
+						if (nt <= 0) {
+							nt = 0;
+							clearInterval(f);
+						}
+					}, 100);
+				}
 			} else {
 				reach = 5;
 				p.velocity.y = 0;
