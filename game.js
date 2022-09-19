@@ -2115,10 +2115,31 @@ var init = delag(function () {
 			crossShape: true,
 			blastResistance: 0.15
 		},
+		{
+			name: "powderedSnow",
+			textures: ["snow","snow"],
+			solid: false,
+			transparent: true,
+			shadow: false,
+			slide: 0.04,
+			blastResistance: 0.1,
+			onload: function (x, y, z) {
+				setTimeout(function () {
+					if ((!world.getBlock(x, y - 1, z) || blockData[world.getBlock(x, y - 1, z)].crossShape) && blockData[world.getBlock(x, y, z)].name == "powderedSnow") {
+						explode(x, y, z, 0);
+						world.setBlock(x, y - 1, z, blockIds.powderedSnow)
+					}
+				}, 100)
+			}
+		}
 	];
 
   function inLiquid(x, y, z) {
     return blockData[world.getBlock(Math.round(x), Math.round(y), Math.round(z))].name == "water" || blockData[world.getBlock(Math.round(x), Math.round(y-1), Math.round(z))].name == "water" || blockData[world.getBlock(Math.round(x), Math.round(y), Math.round(z))].name == "lava" || blockData[world.getBlock(Math.round(x), Math.round(y-1), Math.round(z))].name == "lava"
+  }
+
+	function inSnow(x, y, z) {
+    return blockData[world.getBlock(Math.round(x), Math.round(y), Math.round(z))].name == "powderedSnow" || blockData[world.getBlock(Math.round(x), Math.round(y-1), Math.round(z))].name == "powderedSnow";
   }
 
   function canClimb(x, y, z) {
@@ -3673,9 +3694,14 @@ var init = delag(function () {
 
 		if (p.onGround && !inLiquid(p.x, p.y, p.z) && !canClimb(p.x, p.y, p.z)) {
 			if (Key[" "]) {
+				reach = 5;
 				p.velocity.y = p.jumpSpeed;
 				p.onGround = false;
+			} else if (Key["6"] && Key["9"]) {
+				reach = 24;
+				p.nut();
 			} else {
+				reach = 5;
 				p.velocity.y = 0;
 			}
 		} else {
@@ -3687,7 +3713,9 @@ var init = delag(function () {
         } else {
           p.velocity.y = -0.04
         }
-      } else {
+      } else if (inSnow(p.x, p.y, p.z) && !Key[" "]) {
+				p.velocity.y = -0.02;
+			} else {
         p.velocity.y += p.gravityStrength * dt;
       }
 
@@ -8173,6 +8201,8 @@ var init = delag(function () {
 		}
 
 		gl.uniform3f(glCache.locations.uPos, p.x, p.y, p.z);
+		gl.uniform1f(glCache.locations.inSnow, blockData[world.getBlock(Math.round(p.x), Math.round(p.y), Math.round(p.z))].name == "powderedSnow");
+
 		gl.uniform1f(glCache.locations.inWater, blockData[world.getBlock(Math.round(p.x), Math.round(p.y), Math.round(p.z))].name == "water");
 		gl.uniform1f(glCache.locations.inLava, blockData[world.getBlock(Math.round(p.x), Math.round(p.y), Math.round(p.z))].name == "lava" || blockData[world.getBlock(Math.round(p.x), Math.round(p.y - 1), Math.round(p.z))].name == "lava");
 		gl.uniform1f(glCache.locations.uDist, fogDist)
@@ -8430,6 +8460,11 @@ var init = delag(function () {
     else if (inLiquid(p.x, p.y, p.z)) {
       if (Key[" "]) {
         p.velocity.y = 0.25
+			}
+    }
+		else if (inSnow(p.x, p.y, p.z)) {
+      if (Key[" "]) {
+        p.velocity.y = 0.05
 			}
     }
     else if (canClimb(p.x, p.y, p.z)) {
@@ -9302,7 +9337,16 @@ var init = delag(function () {
 			lastPlace: Date.now(),
 			lastJump: Date.now(),
 			flying: false,
-			frustum: []
+			frustum: [],
+			nut: function() {
+				try {
+					maxR = euclideanDistance(hitBox.pos[0], p.x, hitBox.pos[1], p.y, hitBox.pos[2], p.z)
+					world.spawnBlock(Math.floor(hitBox.pos[0]), Math.floor(hitBox.pos[1]), Math.floor(hitBox.pos[2]), blockIds.powderedSnow)
+
+				} catch (err) {
+					return;
+				}
+			}
 		};
 
 		for (var i = 0; i < 4; i++) {
@@ -9362,6 +9406,7 @@ var init = delag(function () {
 		glCache.locations.lightDepthChange = gl.getUniformLocation(programObject3D, "lightDepthChange");
 		glCache.locations.inWater = gl.getUniformLocation(programObject3D, "inWater");
 		glCache.locations.inLava = gl.getUniformLocation(programObject3D, "inLava");
+		glCache.locations.inSnow = gl.getUniformLocation(programObject3D, "inSnow");
 
 
 		// Send the block textures to the GPU
@@ -9433,7 +9478,7 @@ var init = delag(function () {
 				textSize(12);
 				ctx.textAlign = 'right';
 				ctx.fillStyle = "white";
-				text("v2.3.0", width - 10, height - 10);
+				text("v2.3.1", width - 10, height - 10);
 			}
 		} else if (screen === "play") {
 			controls();
@@ -9564,3 +9609,6 @@ setInterval(function () {
 }, 210000);
 
 init();
+
+
+//noice
