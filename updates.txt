@@ -1,3 +1,14 @@
+v2.4.0 - 10/5/22
+----------------------
+Dev mode/modding, hidden blocks, bug fixes
+----------------------
++ New modding using developer mode
+  * Mods can be added by setting a custom mod function in inspect element.
++ Added hidden blocks, blocks that exist but don't appear in creative inventory
++ FINALLY fixed blocks spawning in bottom bedrock
+  * Still can't believe it took half a year to patch the simplest problem.
+
+
 v2.3.1 - 9/19/22
 ----------------------
 Powdered snow, shaders
