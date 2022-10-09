@@ -1,3 +1,28 @@
+v2.5.0 - 10/8/22
+----------------------
+Survival Alpha
+----------------------
++ New survival game mode
+  * Health
+  * Inventory
+  * Tools
+  * Blocks now have break time
+  * Fall damage
+  * Lava damage
++ Began re-implimenting game saves
+
+
+v2.4.1 - 10/6/22
+----------------------
+Minor general changes
+----------------------
++ Added quartz block
++ Moved many block so hidden blocks, such as spruce leaves
+  * To get spruce leaves, for example, place leaves in a taiga or mountain.
++ Lighened water texture
++ Sped up sand/gravel fall
+
+
 v2.4.0 - 10/5/22
 ----------------------
 Dev mode/modding, hidden blocks, bug fixes
