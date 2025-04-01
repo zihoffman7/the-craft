@@ -1,7 +1,7 @@
 import numpy as np
 from PIL import Image
 
-img = Image.open('spruce_leaves.png')
+img = Image.open('5.png')
 a = np.array(img).tolist()
 
 arr = []

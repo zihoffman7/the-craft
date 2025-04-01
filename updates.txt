@@ -1,3 +1,93 @@
+v4.1.0 - 1/6/25
+----------------------
+Fixed saving completely, village modifications, patches
+----------------------
++ Finally patched population differing each load on same seed
++ Fixed population overwriting natural blocks
++ Lava now turns to cobblestone when in contact with water
++ Lava turns to obsidian if placed on top of water
++ Modified village buildings
++ Reworked pillar generation
++ Grass spreads
+
+v4.0.1 - 10/14/24
+----------------------
+Game Save Patch, Crouch
+----------------------
++ Patched game not loading save outside of rendered chunks on load
++ Fixed save not updating changed natural blocks
++ Added crouching
+
+
+v4.0.0 - 10/10/24
+----------------------
+Game Saves, Texture & Block Reworks, Survival Update,
+----------------------
++ Removed torchflower natural spawning, only spawns in new dungeon structure
++ Removed nether pile and replace with lava lake
++ Patched poor ore vein generation
++ Added FOV configuration
++ Added lush cave with increased vine frequency
++ Half of inventory item counts lost on survival death
++ Removed Ore Hunt and Moon
++ Modified Block Hunt riddles
++ Replace many natural blocks with new textures
++ Modified cactus vertices
++ Reworked Survival fall damage
++ Nether accessed from torchflower on crying obsidian
++ Modified criteria for survival item upgrades
++ Changed birch to white oak
++ Added game save states in local storage!!!
++ Modified and removed other non-natural blocks
+
+
+
+v3.0.2 - 2/13/24
+----------------------
+Fog and block updates
+----------------------
++ Refactored explosions
++ Patched various functionality bugs
++ Began implementation of various functionality such as leaf decay
+
+
+v3.0.1 - 11/4/23
+----------------------
+Fog and block updates
+----------------------
++ Cave fog effects render distance and sky color
++ Removed plains edge and forests edge subbiome
++ Added new savanna and snow grass, spawning in savanna and snowy taiga respectively
++ Nether blocks now required for god tools
+  * Soul sand for god shovel
+  * Warped and crimson leaves for god axe
++ Smoothened biome noise generation
++ Patched outlining & picking up hidden items in creative inventory
++ Patched cursor switching off hand on inventory screen
++ Decreased skylight when at lower altitudes
++ Refined analytics summary
+
+
+v3.0.0 - 10/28/23
+----------------------
+Nether Access, Biome Modifications
+----------------------
++ Nether now accessible in Survival by holding Amethyst Shard standing on crying obsidian
++ Improved overworld terrain generation
++ Ancient and Gilded debris only spawn in nether
++ Sky changes based on biome
++ Removed netherite pickaxe
++ Changed requirements for god tools
+  * netherite is needed for shovel and axe
+  * gilded netherite needed for god pick
++ Modified block hunt to accomidate nether blocks
++ Changed flower forest and nether brinks to subbiomes
+  * Flower forest only spawns cherry trees
+  * Renamed flower forest to cherry forest
++ Added new savanna biome
++ Removed autumn leaves, changed to savanna leaves
+
+
 v2.4.1 - 10/6/22
 ----------------------
 Minor general changes
@@ -404,3 +494,11 @@ Alpha version
   * Fog and day/night cycle can be toggled on and off
   * Render distance can be changed between and including 1 and 16
   * Game can save as text (via pause menu) and be loaded (via homepage)
+
+v0.0.0 - 1/2022
+----------------------
+First Version
+----------------------
++ 1 Biome, forest
++ Ores spawn randomly at certain altitutes in groups of 1
++ Birch and oak trees
